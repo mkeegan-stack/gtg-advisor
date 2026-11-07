@@ -7473,38 +7473,38 @@
     [
      "thragg",
      "general-kregg",
-     "doc-seismic",
-     "volcanikka",
-     "multi-paul"
+     "conquest",
+     "cecil-stedman",
+     "invincible-blue"
     ],
     [
      "thragg",
      "general-kregg",
      "volcanikka",
-     "doc-seismic",
-     "conquest"
-    ],
-    [
-     "powerplex",
-     "mauler-twin-range",
-     "mauler-twin-melee"
+     "multi-paul",
+     "tech-jacket"
     ]
    ],
    "templates": [
     {
-     "name": "Thragg + Kregg + sacrifices",
+     "name": "Thragg + Kregg + Multi-Paul sacrifices",
      "core": [
       "thragg",
       "general-kregg"
-     ],
-     "flex": [
-      "doc-seismic",
-      "volcanikka"
      ],
      "sac": [
       "multi-paul",
       "multi-paul",
       "multi-paul"
+     ],
+     "flex": [
+      "conquest",
+      "cecil-stedman",
+      "invincible-blue",
+      "anissa",
+      "agent-spider",
+      "tech-jacket",
+      "doc-seismic"
      ]
     },
     {
@@ -7515,20 +7515,15 @@
       "volcanikka"
      ],
      "flex": [
+      "multi-paul",
+      "tech-jacket",
       "doc-seismic",
       "conquest"
-     ]
-    },
-    {
-     "name": "Maulerplex",
-     "core": [
-      "powerplex",
-      "mauler-twin-range",
-      "mauler-twin-melee"
-     ]
+     ],
+     "thin": true
     }
    ],
-   "rule": "Allies dying charges Thragg through Kregg's 3rd skill - put Thragg at the back.",
+   "rule": "Kregg's 3rd skill charges Thragg every time an ally dies, so the team feeds him sacrifices: Multi-Pauls at level 1 are fine (his 3rd skill gives two deaths each; Ragnars do much worse). Thragg at the back so the sacrifices get hit first. At higher op ranks swap sacrifices for Conquest, Cecil, Blue Mark, Anissa or Agent Spider.",
    "solo": false
   },
   {

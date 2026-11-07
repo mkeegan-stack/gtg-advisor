@@ -424,10 +424,10 @@ function planOp(o,pool0,mine,mmx){let best=null;
     if(!sac)while(pick.length<size){let bh=null,bs=-1;Object.keys(pool).filter(id=>pool[id]>0&&!H[id].keepBase&&builtEnough(id,mmx)).forEach(id=>{const sc=opsTeamScore([...pick,id],o);if(sc>bs){bs=sc;bh=id;}});if(!bh)break;take(bh);}
     const sc=opsTeamScore(pick,o);if(!best||sc>best.score)best={pick,sac,score:sc,comp};});
   return best||{pick:[],sac:false,score:0,comp:[]};}
-function opsGoals(o,final,mine,copies,mmx){const comp=opsTeamBreakdown(final,o).comp;const goals=[];
+function opsGoals(o,final,mine,copies,mmx){const bd0=opsTeamBreakdown(final,o);const comp=bd0.comp;const t=(o.templates||[]).find(x=>x.name===bd0.tname)||{};const goals=[];
   comp.forEach(x=>{if(final.includes(x)||(o.alts&&(o.alts[x]||[]).some(a=>final.includes(a))))return;const u=S.heroes[x];
     if(!u||!u.owned)goals.push(`get ${short(H[x].name)}`);else if(copies&&!(copies[x]>0)&&!mine.includes(x))goals.push(`${short(H[x].name)} is used in another op you run — a 2nd copy would free him up`);else if(devRatio(x,mmx)<0.6&&!H[x].keepBase)goals.push(`build up ${short(H[x].name)} (level ${u.level})`);});
-  [...new Set(comp)].filter(x=>comp.filter(y=>y===x).length>Math.max(1,+(S.heroes[x]||{}).count||1)).forEach(x=>goals.push(`more copies of ${short(H[x].name)}`));
+  [...new Set(comp)].filter(x=>comp.filter(y=>y===x).length>Math.max(1,+(S.heroes[x]||{}).count||1)).forEach(x=>{const sac=(t.sac||[]).includes(x);goals.unshift(`more copies of ${short(H[x].name)}${sac?' (low-rank, level 1 copies are fine: they\'re sacrifices)':''}`);});
   return [...new Set(goals)];}
 /* ---- wave records: every logged run keeps the team it was run with ---- */
 const WDAYS=30, WMARGIN=0.02;
@@ -872,6 +872,7 @@ function placeTeam(team,ctx={}){const t=team.filter(Boolean);if(t.length<=1)retu
   // 1. placements players agree on
   if(ctx.mode==='ops'&&t.includes('space-racer')&&take('space-racer')){slots[0]='space-racer';notes.push('Space Racer front left - players: from slot 1 his 4th skill rams through every enemy; he does worse in slots 2, 4 or 5.');}
   if(op==='this-is-heavy'&&t.includes('thragg')&&take('thragg')){slots[3]='thragg';notes.push('Thragg at the back - players: the sacrifices in front get hit first, which charges Kregg\'s 3rd skill sooner.');}
+  if(op==='this-is-heavy'){let fi=[0,1,2].filter(i=>!slots[i]);t.filter(x=>x==='multi-paul').forEach(x=>{if(fi.length&&take(x)){slots[fi.shift()]=x;}});if(t.includes('multi-paul'))notes.push('Multi-Paul in front: he\'s the sacrifice, so he should be hit first (players).');}
   if(t.includes('powerplex')&&mauler>=2&&!slots[1]&&take('powerplex')){slots[1]='powerplex';notes.push('Powerplex front middle in a Maulerplex team (players).');}
   // 2. taunters with an area effect and frontal-cone hitters want the middle of the front row: most enemies within reach
   const mid=rest.filter(id=>heroAI(id).taunt).sort((a,b)=>tankiness(b)-tankiness(a))[0]||rest.filter(id=>heroAI(id).cone&&H[id].attackType==='Melee')[0];

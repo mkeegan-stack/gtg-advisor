@@ -204,10 +204,12 @@ T={
 'reanimen-rampage':dict(rule='Cecil carries it with sacrifices, or a Mauler team.',templates=[
   dict(name='Cecil + sacrifices',core=['cecil-stedman'],sac=['multi-paul','multi-paul','multi-paul','multi-paul']),
   dict(name='Maulerplex',core=['powerplex','mauler-twin-range','mauler-twin-melee'],flex=['angstrom-levy','battle-beast'])]),
-'this-is-heavy':dict(rule='Allies dying charges Thragg through Kregg\'s 3rd skill - put Thragg at the back.',templates=[
-  dict(name='Thragg + Kregg + sacrifices',core=['thragg','general-kregg'],flex=['doc-seismic','volcanikka'],sac=['multi-paul','multi-paul','multi-paul']),
-  dict(name='Thragg + Kregg + Volcanikka summons',core=['thragg','general-kregg','volcanikka'],flex=['doc-seismic','conquest']),
-  dict(name='Maulerplex',core=['powerplex','mauler-twin-range','mauler-twin-melee'])]),
+# TiH (LincGames + players, Oct-Nov 2026): "3 rare & lvl1 Multi-Pauls, Thragg & Kregg is an easy min-max comp"; at higher op ranks add
+# Conquest (the op throws immunity-barrier enemies at you), Cecil, Blue Mark, Anissa or Agent Spider. Sacrifices should die easily: level 1 is fine
+# ("lvl 340 vs lvl 1 the difference is minimal"); Multi-Paul's 3rd skill makes a copy when he dies = 2 deaths each; Ragnars tested much worse.
+'this-is-heavy':dict(rule='Kregg\'s 3rd skill charges Thragg every time an ally dies, so the team feeds him sacrifices: Multi-Pauls at level 1 are fine (his 3rd skill gives two deaths each; Ragnars do much worse). Thragg at the back so the sacrifices get hit first. At higher op ranks swap sacrifices for Conquest, Cecil, Blue Mark, Anissa or Agent Spider.',templates=[
+  dict(name='Thragg + Kregg + Multi-Paul sacrifices',core=['thragg','general-kregg'],sac=['multi-paul','multi-paul','multi-paul'],flex=['conquest','cecil-stedman','invincible-blue','anissa','agent-spider','tech-jacket','doc-seismic']),
+  dict(name='Thragg + Kregg + Volcanikka summons',core=['thragg','general-kregg','volcanikka'],flex=['multi-paul','tech-jacket','doc-seismic','conquest'],thin=True)]),
 'train-and-gain':dict(rule='Space Racer (front left) with Body Enhancement + fish. Tech Jacket adds far less here (~30-40 waves) than in Well Done (~110).',templates=[
   dict(name='Space Racer + 4 fish',core=['space-racer'],sac=['aquarus','aquarus','aquarus','aquarus']),
   dict(name='Space Racer + Tech Jacket + fish',core=['space-racer','tech-jacket'],sac=['aquarus','aquarus','aquarus']),
