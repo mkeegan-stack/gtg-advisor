@@ -1,0 +1,26 @@
+<script>
+/* Startup animation ("Slam"): Home Screen app only. Cover matches the launch screen colour, so there's no flash. */
+(function(){try{
+var sa=navigator.standalone===true||(window.matchMedia&&matchMedia('(display-mode: standalone)').matches);if(!sa)return;
+var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+var st=document.createElement('style');st.id='gtgSpS';st.textContent=
+'#gtgSp{position:fixed;inset:0;z-index:2147483647;background:#1a2558;display:flex;align-items:center;justify-content:center;clip-path:polygon(0 0,100% 0,100% 100%,0 100%)}'+
+'#gtgSp svg{width:min(300px,72vw);height:auto;overflow:visible}#gtgSp .gtgSpL,#gtgSp .gtgSpR,#gtgSp .gtgSpD{transform-box:fill-box;transform-origin:center;opacity:0}#gtgSp .gtgSpR{transform-origin:left center}'+
+'#gtgSp.go .gtgSpL{animation:gtgSpSlam .28s cubic-bezier(.2,.9,.3,1.2) forwards}#gtgSp.go .gtgSpL1{animation-delay:.15s}#gtgSp.go .gtgSpL2{animation-delay:.3s}'+
+'#gtgSp.go .gtgSpR{animation:gtgSpWipe .3s .6s ease-out forwards}#gtgSp.go .gtgSpD{animation:gtgSpPop .35s .85s cubic-bezier(.3,1.8,.5,1) forwards}'+
+'#gtgSp.out{animation:gtgSpLift .55s cubic-bezier(.6,0,.3,1) forwards}'+
+'#gtgSp.rm .gtgSpL,#gtgSp.rm .gtgSpR,#gtgSp.rm .gtgSpD{opacity:1}#gtgSp.rm.out{animation:gtgSpFade .35s ease forwards}'+
+'@keyframes gtgSpSlam{from{opacity:0;transform:scale(1.6) skewX(-12deg)}to{opacity:1;transform:none}}@keyframes gtgSpWipe{from{opacity:1;transform:scaleX(0)}to{opacity:1;transform:scaleX(1)}}'+
+'@keyframes gtgSpPop{from{opacity:1;transform:scale(0)}to{opacity:1;transform:scale(1)}}@keyframes gtgSpLift{to{clip-path:polygon(0 0,100% 0,100% -25%,0 -10%)}}@keyframes gtgSpFade{to{opacity:0}}';
+document.head.appendChild(st);
+var c=document.createElement('div');c.id='gtgSp';if(rm)c.className='rm';
+c.innerHTML='<svg viewBox="-180 -235 360 300" aria-hidden="true"><g fill="#fff" transform="translate(-161.8 0)"><path class="gtgSpL gtgSpL0" d="M59.708 -65.136V-96.05199999999999H105.964V-3.304Q97.46799999999999 -0.944 85.078 0.472Q72.688 1.888 62.068 1.888Q39.175999999999995 1.888 27.965999999999998 -4.9559999999999995Q16.756 -11.799999999999999 12.39 -29.028Q8.024 -46.256 8.024 -81.184Q8.024 -115.64 12.625999999999998 -132.986Q17.227999999999998 -150.332 29.028 -157.29399999999998Q40.827999999999996 -164.256 64.664 -164.256Q74.812 -164.256 86.612 -162.83999999999997Q98.41199999999999 -161.42399999999998 105.49199999999999 -159.29999999999998V-129.564Q97.94 -130.50799999999998 89.09 -131.216Q80.24 -131.924 75.756 -131.924Q60.18 -131.924 54.751999999999995 -129.564Q49.324 -127.204 47.43599999999999 -117.41Q45.547999999999995 -107.616 45.547999999999995 -81.184Q45.547999999999995 -56.403999999999996 46.61 -46.256Q47.672 -36.108 51.211999999999996 -32.686Q54.751999999999995 -29.264 63.248 -29.264Q67.25999999999999 -29.264 71.97999999999999 -29.735999999999997V-65.136Z"/><path class="gtgSpL gtgSpL1" d="M143.028 0.0V-129.09199999999998H113.528V-162.368H210.052V-129.09199999999998H180.788V0.0Z"/><path class="gtgSpL gtgSpL2" d="M267.648 -65.136V-96.05199999999999H313.904V-3.304Q305.408 -0.944 293.01800000000003 0.472Q280.628 1.888 270.008 1.888Q247.11599999999999 1.888 235.906 -4.9559999999999995Q224.696 -11.799999999999999 220.32999999999998 -29.028Q215.964 -46.256 215.964 -81.184Q215.964 -115.64 220.566 -132.986Q225.168 -150.332 236.96800000000002 -157.29399999999998Q248.768 -164.256 272.604 -164.256Q282.752 -164.256 294.552 -162.83999999999997Q306.352 -161.42399999999998 313.432 -159.29999999999998V-129.564Q305.88 -130.50799999999998 297.03 -131.216Q288.18 -131.924 283.696 -131.924Q268.12 -131.924 262.692 -129.564Q257.264 -127.204 255.376 -117.41Q253.488 -107.616 253.488 -81.184Q253.488 -56.403999999999996 254.55 -46.256Q255.612 -36.108 259.152 -32.686Q262.692 -29.264 271.188 -29.264Q275.2 -29.264 279.91999999999996 -29.735999999999997V-65.136Z"/></g><rect class="gtgSpR" x="-136" y="34" width="132" height="22" fill="#ffd21f"/><circle class="gtgSpD" cx="144" cy="-190" r="30" fill="#ff2d8a"/></svg>';
+document.body.appendChild(c);
+var done=false;function end(){if(done)return;done=true;try{c.remove();st.remove();}catch(e){}}
+setTimeout(end,7000);
+function run(){requestAnimationFrame(function(){requestAnimationFrame(function(){
+  if(rm){setTimeout(function(){c.classList.add('out');setTimeout(end,400);},600);return;}
+  c.classList.add('go');setTimeout(function(){c.classList.add('out');setTimeout(end,600);},1450);});});}
+if(document.readyState==='complete')run();else window.addEventListener('load',run);
+}catch(e){try{var x=document.getElementById('gtgSp');x&&x.remove();}catch(_){}}})();
+</script>

@@ -1,0 +1,4 @@
+__pycache__/
+reddit-data/
+*.pyc
+.DS_Store
