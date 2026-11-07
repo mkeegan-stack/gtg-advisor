@@ -399,17 +399,18 @@ function builtEnough(id,mm){return H[id].keepBase||devRatio(id,mm)>=0.45;}
 function heroStrength(id){return H[id].keepBase?0.5:Math.sqrt(Math.min(1.3,powerRatio(id)));}
 function templateFit(team,o,t){const rem=[...team];let s=0,core=0,flex=0;const takeOne=id=>{const i=rem.indexOf(id);if(i<0)return false;rem.splice(i,1);return true;};
   t.core.forEach(id=>{if(takeOne(id)){s+=2*heroStrength(id);core++;}});
-  (t.sac||[]).forEach(id=>{if(takeOne(id))s+=0.7;});
+  let sacN=0;(t.sac||[]).forEach(id=>{if([id,...(t.sacAny||[])].some(x=>takeOne(x))){s+=0.9;sacN++;}});
   (t.flex||[]).forEach(id=>{if(takeOne(id)){s+=heroStrength(id);flex++;}});
   rem.forEach(id=>{s+=o.solo?-0.6:0.35*heroStrength(id);});
-  const cov=t.core.length?core/t.core.length:1;s*=0.4+0.6*cov;return {score:Math.max(0,s),core,flex,cov,t};}
+  /* sacrifice/fish slots are part of how the team works (deaths charge Kregg, fish buff crit), so they count towards coverage */
+  const need=t.core.length+(t.sac||[]).length;const cov=need?(core+sacN)/need:1;s*=0.4+0.6*cov;return {score:Math.max(0,s),core,flex,cov,t};}
 function opsTeamBreakdown(team,o){const ts=o.templates||[{name:'players\' team',core:[],flex:opComp(o)}];let best=null;
   ts.forEach(t=>{const f=templateFit(team,o,t);if(!best||f.score>best.score)best=f;});
   const syn=teamSynergy(team),fb=factionBonus(team).pct;const mm=maxMult();
   return {score:best.score*(1+syn*0.5),players:best.core*2+best.flex,meta:team.reduce((a,id)=>a+(TIERW[tierOf(id,'ops')]??.5),0)/Math.max(1,team.length),
-    lvl:team.reduce((a,id)=>a+Math.min(1,devRatio(id,mm)),0)/Math.max(1,team.length),syn,fb,comp:[...best.t.core,...(best.t.flex||[]),...(best.t.sac||[])],tname:best.t.name,thin:!!best.t.thin,cov:best.cov,missing:(()=>{const rem=[...team];return [...best.t.core,...((best.t.sac||[]).length>=3?best.t.sac:[])].filter(x=>{const i=rem.indexOf(x);if(i<0)return true;rem.splice(i,1);return false;});})()};}
+    lvl:team.reduce((a,id)=>a+Math.min(1,devRatio(id,mm)),0)/Math.max(1,team.length),syn,fb,comp:[...best.t.core,...(best.t.flex||[]),...(best.t.sac||[])],tname:best.t.name,thin:!!best.t.thin,cov:best.cov,missing:(()=>{const rem=[...team];const take=x=>{const i=rem.indexOf(x);if(i<0)return false;rem.splice(i,1);return true;};const m=best.t.core.filter(x=>!take(x));(best.t.sac||[]).forEach(x=>{if(![x,...(best.t.sacAny||[])].some(take))m.push(x);});return m;})()};}
 function opsTeamScore(team,o){return opsTeamBreakdown(team,o).score;}
-function whyBetter(a,b){const r=[];if(b.tname!==a.tname||b.players>a.players)r.push(`closer to the players' "${b.tname}" team`);if(b.meta>a.meta+0.05)r.push('higher-rated for ops');if(b.lvl>a.lvl+0.05)r.push('more built-up heroes');if(b.syn+b.fb/200>a.syn+a.fb/200+0.02)r.push('better synergy');return r.join(', ')||'stronger overall';}
+function whyBetter(a,b){const r=[];if(b.missing.length<a.missing.length&&b.tname===a.tname)r.push(`fills ${a.missing.length-b.missing.length>1?'slots':'a slot'} the players' "${b.tname}" team relies on`);if(b.tname!==a.tname||b.players>a.players)r.push(`closer to the players' "${b.tname}" team`);if(b.meta>a.meta+0.05)r.push('higher-rated for ops');if(b.lvl>a.lvl+0.05)r.push('more built-up heroes');if(b.syn+b.fb/200>a.syn+a.fb/200+0.02)r.push('better synergy');return r.join(', ')||'stronger overall';}
 function opComp(o){return (o.comp||((o.hubComps.find(c=>c.stage==='best')||o.hubComps.find(c=>c.stage==='advanced')||o.hubComps[0]||{}).heroes)||[]).slice(0,5);}
 /* players' comp for an op, using your heroes: a comp hero you've barely built is swapped for an alternative or your best ops hero */
 function compPick(o,x,copies,mmx){const alts=[x,...((o.alts||{})[x]||[])].filter(a=>copies[a]>0&&S.heroes[a]);if(!alts.length)return null;
@@ -418,16 +419,28 @@ function teamDiff(mine,sug){const a=[...mine],b=[...sug];const outs=[],ins=[];b.
 function opsRun(){const all=G.ops.filter(o=>o.priority!=='event');const sel=S.settings.opsRun;return all.filter(o=>!sel||sel.includes(o.id));}
 function opsRun(){const all=G.ops.filter(o=>o.priority!=='event');const sel=S.settings.opsRun;return all.filter(o=>!sel||sel.includes(o.id));}
 function planOp(o,pool0,mine,mmx){let best=null;
-  opComps(o).forEach(comp=>{const pool={...pool0};const sac=comp.some(x=>H[x]&&H[x].keepBase&&x!=='aquarus');const size=Math.max(mine.length,comp.length);const pick=[];
-    const take=id=>{if(pool[id]>0){pool[id]--;pick.push(id);}};
-    comp.forEach(x=>{const alts=[x,...((o.alts||{})[x]||[])].filter(a=>pool[a]>0&&builtEnough(a,mmx)).sort((a,b)=>heroValue(b,'ops',mmx)-heroValue(a,'ops',mmx));if(alts.length)take(alts[0]);});
-    if(!sac)while(pick.length<size){let bh=null,bs=-1;Object.keys(pool).filter(id=>pool[id]>0&&!H[id].keepBase&&builtEnough(id,mmx)).forEach(id=>{const sc=opsTeamScore([...pick,id],o);if(sc>bs){bs=sc;bh=id;}});if(!bh)break;take(bh);}
-    const sc=opsTeamScore(pick,o);if(!best||sc>best.score)best={pick,sac,score:sc,comp};});
+  const ts=(o.templates&&o.templates.length)?o.templates:opComps(o).map(c=>({core:[],flex:c}));
+  ts.forEach(t=>{const pool={...pool0};const pick=[];const size=Math.max(mine.length,Math.min(5,t.core.length+(t.sac||[]).length+(t.flex||[]).length),o.solo?1:0);
+    const take=id=>{if(pool[id]>0){pool[id]--;pick.push(id);return true;}return false;};
+    const bestOf=(x,lvl)=>[x,...((o.alts||{})[x]||[])].filter(a=>pool[a]>0&&(!lvl||builtEnough(a,mmx))).sort((a,b)=>heroValue(b,'ops',mmx)-heroValue(a,'ops',mmx))[0];
+    t.core.forEach(x=>{const a=bestOf(x,true);if(a)take(a);});
+    let unfilled=0;(t.sac||[]).forEach(x=>{if(pick.length>=5)return;if(![x,...(t.sacAny||[])].some(take))unfilled++;});
+    (t.flex||[]).forEach(x=>{if(pick.length>=size)return;const a=bestOf(x,true);if(a)take(a);});
+    if(!o.solo)while(pick.length<size){let bh=null,bs=-1;Object.keys(pool).filter(id=>pool[id]>0&&!H[id].keepBase&&builtEnough(id,mmx)).forEach(id=>{const sc=opsTeamScore([...pick,id],o);if(sc>bs){bs=sc;bh=id;}});if(!bh)break;take(bh);}
+    const comp=[...t.core,...(t.sac||[]),...(t.flex||[])].slice(0,5);
+    const sc=opsTeamScore(pick,o);if(!best||sc>best.score)best={pick,sac:unfilled>0,score:sc,comp};});
   return best||{pick:[],sac:false,score:0,comp:[]};}
-function opsGoals(o,final,mine,copies,mmx){const bd0=opsTeamBreakdown(final,o);const comp=bd0.comp;const t=(o.templates||[]).find(x=>x.name===bd0.tname)||{};const goals=[];
-  comp.forEach(x=>{if(final.includes(x)||(o.alts&&(o.alts[x]||[]).some(a=>final.includes(a))))return;const u=S.heroes[x];
-    if(!u||!u.owned)goals.push(`get ${short(H[x].name)}`);else if(copies&&!(copies[x]>0)&&!mine.includes(x))goals.push(`${short(H[x].name)} is used in another op you run — a 2nd copy would free him up`);else if(devRatio(x,mmx)<0.6&&!H[x].keepBase)goals.push(`build up ${short(H[x].name)} (level ${u.level})`);});
-  [...new Set(comp)].filter(x=>comp.filter(y=>y===x).length>Math.max(1,+(S.heroes[x]||{}).count||1)).forEach(x=>{const sac=(t.sac||[]).includes(x);goals.unshift(`more copies of ${short(H[x].name)}${sac?' (low-rank, level 1 copies are fine: they\'re sacrifices)':''}`);});
+function opsGoals(o,final,mine,copies,mmx){const bd0=opsTeamBreakdown(final,o);const t=(o.templates||[]).find(x=>x.name===bd0.tname)||{core:[],flex:bd0.comp};const goals=[];
+  const sacs=t.sac||[],cnt=x=>Math.max(1,+(S.heroes[x]||{}).count||1);
+  // core heroes first, then flex heroes only for slots the template still has free
+  const room=o.solo?0:Math.max(0,5-t.core.length-sacs.length);const want=[...t.core,...(t.flex||[]).filter(x=>!final.includes(x)).slice(0,Math.max(0,room-(t.flex||[]).filter(x=>final.includes(x)).length))];
+  want.forEach(x=>{if(final.includes(x)||(o.alts&&(o.alts[x]||[]).some(a=>final.includes(a))))return;const u=S.heroes[x];
+    if(!u||!u.owned)goals.push(`get ${short(H[x].name)}`);else if(copies&&!(copies[x]>0)&&!mine.includes(x))goals.push(`${short(H[x].name)} is used in another op you run — a 2nd copy would free him up`);else if(devRatio(x,mmx)<0.6&&!H[x].keepBase&&t.core.includes(x))goals.push(`build up ${short(H[x].name)} (level ${u.level})`);});
+  // sacrifice slots: count how many are filled by the listed hero or its accepted alternatives
+  if(sacs.length){const rem=[...final];const take=x=>{const i=rem.indexOf(x);if(i<0)return false;rem.splice(i,1);return true;};t.core.forEach(take);let miss=0;sacs.forEach(x=>{if(![x,...(t.sacAny||[])].some(take))miss++;});
+    if(miss){const x=sacs[0];const alt=(t.sacAny||[]).filter(a=>a!==x).slice(0,2).map(a=>short(H[a].name));const fish=x==='aquarus';
+      goals.unshift(fish?`${miss} more ${short(H[x].name)} (fish: keep them at Elite+, level 160-200)`:`${miss} more sacrifice${miss>1?'s':''}: ${short(H[x].name)} copies at level 1 are best${alt.length?` (or level-1 ${alt.join(' / ')})`:''} — they only need to die`);}}
+  [...new Set(t.core)].filter(x=>t.core.filter(y=>y===x).length>cnt(x)).forEach(x=>goals.unshift(`more copies of ${short(H[x].name)}`));
   return [...new Set(goals)];}
 /* ---- wave records: every logged run keeps the team it was run with ---- */
 const WDAYS=30, WMARGIN=0.02;
@@ -712,7 +725,7 @@ function opsView(){const A=opsAdvice();const all=G.ops.filter(o=>o.priority!=='e
   Object.values(A).forEach(({o,mine,sug,better,diff,goals,why,running,tried})=>{
     const pb=opPB(o.id);const fx=!o.solo&&mine.length>1?placementFixes(mine,{mode:'ops',opId:o.id}).length:0;const bd=mine.length?opsTeamBreakdown(mine,o):null;
     const sum=[mine.length?esc(mine.map(x=>tileName(H[x])).join(', ')):'<b>No team set</b>',pb?'best '+fmtW(pb.w)+' waves':'',better?'<b style="color:var(--gold,#ffd54a)">better team available</b>':bd&&!bd.missing.length?'✓ players\' team':'',fx?`<b style="color:var(--gold,#ffd54a)">${fx} position change${fx>1?'s':''}</b>`:''].filter(Boolean).join(' · ');
-    h+=`<details class="card opcard" id="op-${esc(o.id)}" data-opid="${esc(o.id)}" ${sub.opOpen[o.id]?'open':''} style="${running?'':'opacity:.85'}"><summary><span class="chev">›</span><div class="kicker">${esc(o.reward||'')} · ${esc(o.priority)} priority${running?'':' · not running'}</div><h3>${esc(o.name)} (${esc(o.short)})</h3><div class="opsum">${sum}</div></summary><div class="rule"></div><p>${esc(o.rule||o.now)}</p>${mine.length?(()=>{const b=opsTeamBreakdown(mine,o);const sr=o.id==='train-and-gain'&&mine.includes('space-racer')&&mine[0]!=='space-racer';
+    h+=`<details class="card opcard" id="op-${esc(o.id)}" data-opid="${esc(o.id)}" ${sub.opOpen[o.id]?'open':''} style="${running?'':'opacity:.85'}"><summary><span class="chev">›</span><div class="kicker">${esc(o.reward||'')} · ${esc(o.priority)} priority${running?'':' · not running'}</div><h3>${esc(o.name)} (${esc(o.short)})</h3><div class="opsum">${sum}</div></summary><div class="rule"></div><p>${esc(o.rule||o.now)}</p>${o.mech?`<p class="tiny muted">${esc(o.mech)}</p>`:''}${mine.length?(()=>{const b=opsTeamBreakdown(mine,o);const sr=o.id==='train-and-gain'&&mine.includes('space-racer')&&mine[0]!=='space-racer';
       return `<p class="tiny ${b.missing.length?'muted':''}" style="margin-top:4px">${b.missing.length?`Nearest players' team: ${esc(b.tname)} (yours is missing ${esc([...new Set(b.missing)].map(x=>short(H[x].name)).join(', '))})`:`✓ You're running the players' "${esc(b.tname)}" team.`}</p>`+(sr?`<p class="tiny" style="margin-top:4px"><b>Position:</b> Space Racer is in slot ${mine.indexOf('space-racer')+1} of your team here. If that's your in-game order, move him to front left (slot 1) - players say he hits every enemy with his 4th skill from there, and is weaker in slots 2, 4 or 5.</p>`:'');})():''}${running?'':'<p class="tiny muted" style="margin-top:4px">You don\'t run this now, so it can use heroes from your other ops.</p>'}`;
     if(mine.length){h+=`<div class="sec" style="margin-top:10px;font-size:15px">Your team ${better?'':'<small>best you can field ✓</small>'}</div><div class="grid5">${mine.map(id=>tileHTML(id,{mini:true,mode:'ops'})).join('')}</div>`+(o.solo?'':placementBlock(mine,{mode:'ops',opId:o.id}));
       if(better)h+=`<div class="hint" style="margin-top:8px"><b>Better option${running?' from heroes free in the ops you run':''}</b> (${esc(why)}): ${diff.outs.length?'take out '+esc(diff.outs.map(x=>short(H[x].name)).join(', '))+', ':''}put in ${esc(diff.ins.map(x=>short(H[x].name)).join(', '))}.</div><div class="grid5">${sug.map(id=>tileHTML(id,{mini:true,mode:'ops'})).join('')}</div>`;}
@@ -734,7 +747,7 @@ VIEWS.db=function(){const d=sub.dv||'heroes';
     h+=`<div class="grid4">${ids.sort((a,b)=>short(H[a].name).localeCompare(short(H[b].name))).map(id=>tileHTML(id,{dim:false})).join('')}</div>`;}
   if(d==='artifacts'){h+=`<p class="tiny muted">Tier = player rating (GTG Hub, plus Reddit for newer artifacts). Effects at the level noted.</p>`+['S','A','B','C','?'].map(t=>{const as=G.artifacts.filter(a=>(a.tier||'?')===t);if(!as.length)return'';return `<div class="sec">${t==='?'?'Unrated':t+' tier'}</div>`+as.map(a=>{const o=S.artifacts[a.name];return `<details><summary><span class="tier ${esc(t)}" style="padding:1px 6px;margin-right:6px">${esc(t)}</span>${esc(a.name)} ${o&&+o.level>0?`<span class="tag hl">Lv ${esc(o.level)}</span>`:''}</summary><div>${a.tierNote?`<b>Players:</b> ${esc(a.tierNote)}<br>`:''}${esc(a.effect)}<br><span class="muted">${a.source?'Source: '+esc(a.source)+'. ':''}${a.statsSeen?'Stats seen: '+esc(a.statsSeen)+'. ':(a.stats||[]).length?'Stats: '+esc(a.stats.join(', ')):''}</span><br>${a.owners?`<b>Players give it to:</b> ${esc(a.owners.map(x=>short(H[x].name)).join(' → '))}<br>`:''}${heroesRecommending(a.name)}</div></details>`;}).join('');}).join('');}
   if(d==='totems'){h+=`<p class="tiny muted">Each totem fits one hero. All come from Alliance Warfare.</p>`+G.totems.slice().sort((a,b)=>a.heroName.localeCompare(b.heroName)).map(t=>`<details><summary>${esc(t.name)} <span class="muted tiny">· ${esc(short(t.heroName))}</span></summary><div>${esc(t.effect||'Effect not recorded yet.')}<br><span class="muted">${esc(t.stat)}</span></div></details>`).join('');}
-  if(d==='ops'){h+=G.ops.map(o=>`<details><summary>${esc(o.name)} <span class="muted tiny">· ${esc(o.reward||'')}</span></summary><div><p><b>Now:</b> ${esc(o.now)}</p>${o.hubComps.map(c=>`<p><b>${esc(c.stage)}:</b> ${esc(c.heroes.map(x=>short(H[x].name)).join(', '))}</p>${(c.strategy||[]).filter(Boolean).slice(0,1).map(s=>`<p class="muted">${esc(s)}</p>`).join('')}`).join('')}<p class="muted">Max rank: ${esc((G.modesRef.opsMaxRank||{})[o.name]??'—')}</p></div></details>`).join('');}
+  if(d==='ops'){h+=G.ops.map(o=>`<details><summary>${esc(o.name)} <span class="muted tiny">· ${esc(o.reward||'')}</span></summary><div><p><b>Now:</b> ${esc(o.now)}</p>${o.rule?`<p>${esc(o.rule)}</p>`:''}${o.mech?`<p class="muted">${esc(o.mech)}</p>`:''}${o.hubComps.map(c=>`<p><b>${esc(c.stage)}:</b> ${esc(c.heroes.map(x=>short(H[x].name)).join(', '))}</p>${(c.strategy||[]).filter(Boolean).slice(0,1).map(s=>`<p class="muted">${esc(s)}</p>`).join('')}`).join('')}<p class="muted">Max rank: ${esc((G.modesRef.opsMaxRank||{})[o.name]??'—')}</p></div></details>`).join('');}
   if(d==='rules'){const M=G.mechanics;
     h+=`<div class="sec">Faction cycle (+20% damage)</div><div class="card">${M.factionCycle.map(([a,b])=>`<div class="cycle" style="margin-bottom:6px"><div class="fpill ${FKEY[a]}">${esc(a)}</div><div>beats →</div><div class="fpill ${FKEY[b]}">${esc(b)}</div></div>`).join('')}</div>`;
     h+=`<div class="sec">Team faction bonus</div><div class="tbox"><table class="t"><tr><th>Team</th><th>Bonus</th></tr>${Object.entries(M.teamBonus).map(([k,v])=>`<tr><td>${esc(k.includes('+')?k.replace('+',' + ')+' from two factions':k+' from one faction')}</td><td>${esc(v)}</td></tr>`).join('')}</table></div><p class="tiny muted">${esc(M.teamBonusNote)}</p>`;
@@ -872,7 +885,14 @@ function placeTeam(team,ctx={}){const t=team.filter(Boolean);if(t.length<=1)retu
   // 1. placements players agree on
   if(ctx.mode==='ops'&&t.includes('space-racer')&&take('space-racer')){slots[0]='space-racer';notes.push('Space Racer front left - players: from slot 1 his 4th skill rams through every enemy; he does worse in slots 2, 4 or 5.');}
   if(op==='this-is-heavy'&&t.includes('thragg')&&take('thragg')){slots[3]='thragg';notes.push('Thragg at the back - players: the sacrifices in front get hit first, which charges Kregg\'s 3rd skill sooner.');}
-  if(op==='this-is-heavy'){let fi=[0,1,2].filter(i=>!slots[i]);t.filter(x=>x==='multi-paul').forEach(x=>{if(fi.length&&take(x)){slots[fi.shift()]=x;}});if(t.includes('multi-paul'))notes.push('Multi-Paul in front: he\'s the sacrifice, so he should be hit first (players).');}
+  // sacrifice comps: the sacrifices go in front so they're hit first; the carry waits at the back
+  const oo=op&&G.ops.find(x=>x.id===op);
+  if(oo&&oo.templates){const bd=opsTeamBreakdown(t,oo);const tp=oo.templates.find(x=>x.name===bd.tname)||{};const sacIds=[...new Set([...(tp.sac||[]),...(tp.sacAny||[])])].filter(x=>x!=='aquarus');
+    const sc=t.filter(x=>sacIds.includes(x)&&!(tp.core||[]).includes(x));
+    if(sc.length){let fi=[0,1,2,3,4].filter(i=>!slots[i]);sc.forEach(x=>{if(fi.length&&take(x))slots[fi.shift()]=x;});
+      const carry=(tp.core||[]).filter(x=>rest.includes(x));let bi=[4,3].filter(i=>!slots[i]);carry.forEach(x=>{if(bi.length&&take(x))slots[bi.shift()]=x;});
+      notes.push(`${[...new Set(sc)].map(nm).join(' / ')} in front: ${sc.length>1?'they\'re':'he\'s'} the sacrifice${sc.length>1?'s':''}, so ${sc.length>1?'they':'he'} should be hit and die first (players).`);}}
+  if(op==='everyone-whos-anyone'&&t.includes('invincible')&&take('invincible')){slots[1]='invincible';if(take('cecil-stedman')){slots[3]='cecil-stedman';}notes.push('Yark front middle, Cecil at the back (top players\' layout).');}
   if(t.includes('powerplex')&&mauler>=2&&!slots[1]&&take('powerplex')){slots[1]='powerplex';notes.push('Powerplex front middle in a Maulerplex team (players).');}
   // 2. taunters with an area effect and frontal-cone hitters want the middle of the front row: most enemies within reach
   const mid=rest.filter(id=>heroAI(id).taunt).sort((a,b)=>tankiness(b)-tankiness(a))[0]||rest.filter(id=>heroAI(id).cone&&H[id].attackType==='Melee')[0];
@@ -882,7 +902,8 @@ function placeTeam(team,ctx={}){const t=team.filter(Boolean);if(t.length<=1)retu
   const frontFree=[0,1,2].filter(i=>!slots[i]),backFree=[3,4].filter(i=>!slots[i]);
   const nFront=Math.min(frontFree.length,Math.max(0,order.length-backFree.length));const fr=order.slice(0,nFront).sort((a,b)=>tankiness(b)-tankiness(a)),bk=order.slice(nFront);
   fr.forEach((id,i)=>{slots[frontFree[i]]=id;});bk.forEach((id,i)=>{if(backFree[i]!==undefined)slots[backFree[i]]=id;});
-  if(slots[0]&&slots[0]!=='space-racer')notes.push(`${nm(slots[0])} front left - slot 1 draws the most fire (players), so the toughest front-liner goes there.`);
+  const isSac=id=>!!(oo&&oo.templates&&oo.templates.some(tp=>[...(tp.sac||[]),...(tp.sacAny||[])].includes(id)&&!(tp.core||[]).includes(id)));
+  if(slots[0]&&slots[0]!=='space-racer'&&!isSac(slots[0]))notes.push(`${nm(slots[0])} front left - slot 1 draws the most fire (players), so the toughest front-liner goes there.`);
   const rangedFront=fr.filter(x=>H[x].attackType!=='Melee');if(rangedFront.length)notes.push(`${rangedFront.map(nm).join(', ')} ${rangedFront.length>1?'are':'is'} ranged but in front only because the team has too few melee heroes.`);
   t.filter(id=>heroAI(id).diver).forEach(id=>notes.push(`${nm(id)} goes to the back of their line by himself, so his starting spot matters less.`));
   // 4. what the enemy's skills go after (when you've told the app who they are)

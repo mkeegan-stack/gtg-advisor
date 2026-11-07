@@ -190,44 +190,59 @@ json.dump(g,open(f'{D}/game-data.json','w'),indent=1)
 # Whole-team templates per op from r/invinciblegtg (Jun-Nov 2026) + GTG Hub. core = what the team is built around,
 # flex = heroes players slot in around the core, sac = low-level sacrifice/fish slots (level doesn't matter).
 g=json.load(open(f'{D}/game-data.json'));O={o['id']:o for o in g['ops']}
+# Each template: core = what the team is built around; flex = heroes players slot in around it;
+# sac = sacrifice / fish slots where level doesn't matter (sacAny = other heroes players use in those slots, best first);
+# mech = op mechanics players point to. Sources: r/invinciblegtg threads Jun-Nov 2026 (LincGames' op guides, the
+# "guide from a top 100 player" thread and replies), cross-checked so only comps several players run are listed.
 T={
-'downtown-destruction':dict(rule='Anissa does most of the work here (pink XP).',templates=[
-  dict(name='Space Racer + Anissa',core=['anissa','space-racer'],flex=['invincible-blue','volcanikka','rus-livingston','universa','doc-seismic']),
-  dict(name='Universa + Anissa + Blue Mark',core=['anissa','universa','invincible-blue'],flex=['rus-livingston','doc-seismic','volcanikka'],sac=['kid-omni-man']),
-  dict(name='Anissa + Universa',core=['anissa','universa'],flex=['doc-seismic','volcanikka','invincible-blue'],sac=['kid-omni-man'])]),
-'everyone-whos-anyone':dict(rule='Solo op: one hero only - adding others lowers waves (Cecil alongside Yark is the only pairing players mention).',solo=True,templates=[
-  dict(name='Solo Brit',core=['brit']),dict(name='Solo Yark',core=['invincible'],flex=['cecil-stedman'])]),
-'guardians-of-the-globe':dict(rule='Armour (gear) op, low priority: players fill it with heroes no better op needs. Criminals get a 20% faction boost here. A Lizard League team (Komodo, King Lizard, Iguana + the 2 common Lizard soldiers) reaches ~1,400 waves without taking anyone from other ops.',templates=[
-  dict(name='Lizard League',core=['komodo-dragon','king-lizard','iguana'],flex=['lizard-soldier-m','lizard-soldier-f','angstrom-levy','titan']),
-  dict(name='Criminals (20% boost)',core=['komodo-dragon','angstrom-levy','titan'],flex=['king-lizard','iguana','magmaniac','powerplex','mauler-twin-range','machine-head'],thin=True),
-  dict(name='Maulerplex (filler)',core=['powerplex','mauler-twin-range'],flex=['mauler-twin-range','mauler-twin-range','mauler-twin-range'],thin=True)]),
-'reanimen-rampage':dict(rule='Cecil carries it with sacrifices, or a Mauler team.',templates=[
-  dict(name='Cecil + sacrifices',core=['cecil-stedman'],sac=['multi-paul','multi-paul','multi-paul','multi-paul']),
-  dict(name='Maulerplex',core=['powerplex','mauler-twin-range','mauler-twin-melee'],flex=['angstrom-levy','battle-beast'])]),
-# TiH (LincGames + players, Oct-Nov 2026): "3 rare & lvl1 Multi-Pauls, Thragg & Kregg is an easy min-max comp"; at higher op ranks add
-# Conquest (the op throws immunity-barrier enemies at you), Cecil, Blue Mark, Anissa or Agent Spider. Sacrifices should die easily: level 1 is fine
-# ("lvl 340 vs lvl 1 the difference is minimal"); Multi-Paul's 3rd skill makes a copy when he dies = 2 deaths each; Ragnars tested much worse.
-'this-is-heavy':dict(rule='Kregg\'s 3rd skill charges Thragg every time an ally dies, so the team feeds him sacrifices: Multi-Pauls at level 1 are fine (his 3rd skill gives two deaths each; Ragnars do much worse). Thragg at the back so the sacrifices get hit first. At higher op ranks swap sacrifices for Conquest, Cecil, Blue Mark, Anissa or Agent Spider.',templates=[
-  dict(name='Thragg + Kregg + Multi-Paul sacrifices',core=['thragg','general-kregg'],sac=['multi-paul','multi-paul','multi-paul'],flex=['conquest','cecil-stedman','invincible-blue','anissa','agent-spider','tech-jacket','doc-seismic']),
-  dict(name='Thragg + Kregg + Volcanikka summons',core=['thragg','general-kregg','volcanikka'],flex=['multi-paul','tech-jacket','doc-seismic','conquest'],thin=True)]),
-'train-and-gain':dict(rule='Space Racer (front left) with Body Enhancement + fish. Tech Jacket adds far less here (~30-40 waves) than in Well Done (~110).',templates=[
+'turn-up-the-heat':dict(rule='Gold only, the lowest priority: players put leftover heroes here or use it to finish the "20 GDA ops" weekly. Fish teams or Maulerplex all land in the same place.',
+  mech='Short op with weak enemies: a full fish team does about as well as anything.',templates=[
+  dict(name='Space Racer + Universa + fish',core=['space-racer','universa'],sac=['aquarus','aquarus','aquarus']),
+  dict(name='Maulerplex (ranged)',core=['powerplex','mauler-twin-range'],flex=['mauler-twin-range','mauler-twin-range','mauler-twin-range','mauler-twin-melee']),
+  dict(name='Universa + 4 fish',core=['universa'],sac=['aquarus','aquarus','aquarus','aquarus']),
+  dict(name='5 fish',core=[],sac=['aquarus','aquarus','aquarus','aquarus','aquarus'])]),
+'train-and-gain':dict(rule='Space Racer (front left) + 4 fish caps at about 1,600 waves; Tech Jacket in place of a fish adds a little. Only a fully built Maulerplex (Powerplex + 4 ranged Maulers, all Omni+, Mauler Cell "Not the Clone") goes past 2,000. Once you hit the wave you want, swap fish for Flaxan Leaders: each adds loot without losing waves.',
+  mech='Keep fish at Elite+ (level 160-200): higher ranks unlock a 3rd-skill animation that costs waves. Body Enhancement does little on Space Racer once the fish push his crit to 100%.',templates=[
   dict(name='Space Racer + 4 fish',core=['space-racer'],sac=['aquarus','aquarus','aquarus','aquarus']),
   dict(name='Space Racer + Tech Jacket + fish',core=['space-racer','tech-jacket'],sac=['aquarus','aquarus','aquarus']),
-  dict(name='Space Racer + Flaxan Leaders + fish',core=['space-racer'],flex=['flaxan-leader','flaxan-leader'],sac=['aquarus','aquarus']),
-  dict(name='Maulerplex',core=['powerplex','mauler-twin-range','mauler-twin-melee'],flex=['mauler-twin-range','mauler-twin-melee'])]),
-'turn-up-the-heat':dict(rule='Gold only - lowest priority. Short op: fish teams or Maulerplex.',templates=[
-  dict(name='Space Racer + Tech Jacket + fish',core=['space-racer'],flex=['tech-jacket','anissa'],sac=['aquarus','aquarus']),
-  dict(name='Maulerplex',core=['powerplex','mauler-twin-range'],flex=['mauler-twin-range','mauler-twin-melee','angstrom-levy']),
-  dict(name='5 fish',core=[],sac=['aquarus','aquarus','aquarus','aquarus','aquarus'])]),
-'well-done':dict(rule='Crit team makes Omni-Man "unstoppable" (needs Rex and Agent Spider 2nd skills); Cecil (3rd skill to 10) and Tech Jacket push waves.',templates=[
-  dict(name='Crit team',core=['omni-man','rex-splode','agent-spider'],flex=['tech-jacket','cecil-stedman','allen-the-alien']),
-  dict(name='Subsoil',core=['volcanikka','damien-darkblood-under-realm','doc-seismic'],flex=['omni-man','agent-spider','tech-jacket'])]),
-'schools-out':dict(rule='Only worth running during All Hands on Deck events (rewards come from the recruitment pool).',templates=[
-  dict(name='Space Racer + Anissa + Tech Jacket + fish',core=['space-racer','anissa','tech-jacket'],flex=['invincible-blue','tech-jacket'],sac=['aquarus','aquarus'])]),
+  dict(name='Space Racer + Flaxan Leaders + fish',core=['space-racer'],flex=['flaxan-leader','flaxan-leader','flaxan-leader'],sac=['aquarus','aquarus']),
+  dict(name='Universa + 4 fish',core=['universa'],sac=['aquarus','aquarus','aquarus','aquarus']),
+  dict(name='Maulerplex (ranged)',core=['powerplex','mauler-twin-range','mauler-twin-range'],flex=['mauler-twin-range','mauler-twin-range'])]),
+'downtown-destruction':dict(rule='Pink XP. Space Racer, Anissa and Blue Mark carry it (Anissa is the main damage: every enemy is human, so push her level and her 2nd skill); the other two slots are flexible - a second Blue Mark, Rus (2nd skill 10) or Tech Jacket.',
+  mech='All enemies are humans, which Anissa\'s 2nd skill punishes. Give her an attack artifact (Spray Gun or Cloak); Notes can go on a teammate. An unskilled 2nd Space Racer works here if your main one is in Train and Gain.',templates=[
+  dict(name='Space Racer + Anissa + Blue Mark',core=['space-racer','anissa','invincible-blue'],flex=['invincible-blue','rus-livingston','tech-jacket','flaxan-leader','aquarus','universa']),
+  dict(name='Universa + Anissa + Blue Mark',core=['universa','anissa','invincible-blue'],flex=['rus-livingston','tech-jacket','invincible-blue','kid-omni-man','doc-seismic','volcanikka'])]),
+'guardians-of-the-globe':dict(rule='Armour (gear) op, low priority. Criminals get +20% here. Lizard League + Doc + Shapesmith is the comp top players run (~1,550 waves); fill with leftovers otherwise.',
+  mech='Criminal faction boost (+20%). Shapesmith is the one non-Criminal players rate highly here.',templates=[
+  dict(name='Doc + Shapesmith + Lizards',core=['komodo-dragon','shapesmith','doc-seismic'],flex=['king-lizard','iguana','angstrom-levy','titan']),
+  dict(name='Lizard League',core=['komodo-dragon','king-lizard','iguana'],flex=['lizard-soldier-m','lizard-soldier-f','angstrom-levy','titan','doc-seismic']),
+  dict(name='Maulerplex (filler)',core=['powerplex','mauler-twin-range'],flex=['mauler-twin-range','mauler-twin-range','mauler-twin-melee'],thin=True)]),
+'reanimen-rampage':dict(rule='Blue XP late game. One strong hero plus four level-1 sacrifices: Cecil + 4 Multi-Pauls, or Universa + 4 level-1 Omni-Men (~315 waves for a top-100 player). A Mauler team gets ~300.',
+  mech='Sacrifices only need to die: rank and level don\'t matter, so use spare low copies rather than built heroes.',templates=[
+  dict(name='Cecil + sacrifices',core=['cecil-stedman'],sac=['multi-paul','multi-paul','multi-paul','multi-paul'],sacAny=['omni-man']),
+  dict(name='Universa + sacrifices',core=['universa'],sac=['omni-man','omni-man','omni-man','omni-man'],sacAny=['multi-paul']),
+  dict(name='Maulerplex',core=['powerplex','mauler-twin-range','mauler-twin-melee'],flex=['mauler-twin-range','mauler-twin-melee','angstrom-levy'])]),
+'this-is-heavy':dict(rule='Kregg\'s 3rd skill charges Thragg every time an ally dies, so the team feeds him sacrifices: level-1 Multi-Pauls are best (his 3rd skill gives two deaths each), any level-1 Viltrumite also works; Ragnars do much worse. Thragg at the back so the sacrifices get hit first. Strong accounts swap sacrifices for Conquest and Nolan (~2,200 waves).',
+  mech='The op sends Yellow Mark and The Immortal, who have immunity barriers - Conquest handles them. Volcanikka summons work as sacrifices but cost about 400-600 waves.',templates=[
+  dict(name='Thragg + Kregg + sacrifices',core=['thragg','general-kregg'],sac=['multi-paul','multi-paul','multi-paul'],sacAny=['thula','kid-omni-man'],flex=['conquest','nolan','cecil-stedman','invincible-blue','anissa','agent-spider']),
+  dict(name='Thragg + Kregg + Conquest + Nolan',core=['thragg','general-kregg','conquest'],flex=['nolan','cecil-stedman','invincible-blue'],sac=['multi-paul'],sacAny=['thula','kid-omni-man']),
+  dict(name='Thragg + Kregg + Volcanikka summons',core=['thragg','general-kregg','volcanikka'],flex=['multi-paul','tech-jacket','doc-seismic','conquest'],thin=True)]),
+'everyone-whos-anyone':dict(rule='Solo op: one hero only. Brit (with Oxygen Helmet) or Yark; Cecil at the back is the only partner that doesn\'t cost waves.',solo=True,
+  mech='A solo hero fully dies instead of being exhausted, so he redoes his opening attack and enemies can\'t heal or charge while he\'s down. Anyone added slows that down.',templates=[
+  dict(name='Solo Brit',core=['brit']),dict(name='Solo Yark',core=['invincible'],flex=['cecil-stedman'])]),
+'schools-out':dict(rule='Only worth running during All Hands on Deck events: the heroes it gives come from the normal recruitment pool, so that\'s the only time event heroes can drop. Use your fastest team (your Space Racer team).',templates=[
+  dict(name='Space Racer + Anissa + Tech Jacket + fish',core=['space-racer','anissa','tech-jacket'],flex=['invincible-blue'],sac=['aquarus','aquarus'])]),
+'well-done':dict(rule='Late-game op. The crit team (Omni-Man, Rex, Agent Spider) makes Omni-Man "unstoppable"; Red Rush, Thaedus or Allen (with the Neural Link chip), Cecil or Tech Jacket fill it out. Players also use it for the Worlds Beyond weekly.',
+  mech='Rex and Agent Spider need their 2nd skills levelled for the crit buff to land.',templates=[
+  dict(name='Crit team',core=['omni-man','rex-splode','agent-spider'],flex=['red-rush','thaedus','allen-the-alien','tech-jacket','cecil-stedman','universa','general-kregg','doc-seismic']),
+  dict(name='Subsoil',core=['volcanikka','damien-darkblood-under-realm','doc-seismic'],flex=['omni-man','agent-spider','tech-jacket'],thin=True)]),
 }
+O['turn-up-the-heat'].update(reward='Gold')
+O['schools-out'].update(priority='low')
+O['reanimen-rampage'].update(reward='Blue XP (late game), gold, access cards')
 O['guardians-of-the-globe'].update(name='The Guardians Around The Globe',short='TGAG',priority='low',now='Armour op. Leftover heroes; Criminals get +20%. Lizard League (Komodo, King Lizard, Iguana + 2 Lizard soldiers) is the comp players name.')
 for k,v in T.items():
-    O[k]['templates']=v['templates'];O[k]['rule']=v['rule'];O[k]['solo']=v.get('solo',False)
-    O[k]['comps']=[(t['core']+t.get('flex',[])+t.get('sac',[]))[:5] for t in v['templates']]
+    O[k]['templates']=v['templates'];O[k]['rule']=v['rule'];O[k]['solo']=v.get('solo',False);O[k]['mech']=v.get('mech','')
+    O[k]['comps']=[(t['core']+t.get('sac',[])+t.get('flex',[]))[:5] for t in v['templates']]
 g['eventOpTip']='Event ops last 3-5 minutes: players pull Space Racer and Anissa out of their usual op for a few runs. A second, unskilled level-340 Space Racer and 3-4 level-159 fish cover most event ops.'
 json.dump(g,open(f'{D}/game-data.json','w'),indent=1)

@@ -7063,76 +7063,57 @@
    ],
    "comps": [
     [
-     "anissa",
      "space-racer",
+     "anissa",
      "invincible-blue",
-     "volcanikka",
+     "invincible-blue",
      "rus-livingston"
     ],
     [
-     "anissa",
      "universa",
+     "anissa",
      "invincible-blue",
      "rus-livingston",
-     "doc-seismic"
-    ],
-    [
-     "anissa",
-     "universa",
-     "doc-seismic",
-     "volcanikka",
-     "invincible-blue"
+     "tech-jacket"
     ]
    ],
    "templates": [
     {
-     "name": "Space Racer + Anissa",
+     "name": "Space Racer + Anissa + Blue Mark",
      "core": [
+      "space-racer",
       "anissa",
-      "space-racer"
+      "invincible-blue"
      ],
      "flex": [
       "invincible-blue",
-      "volcanikka",
       "rus-livingston",
-      "universa",
-      "doc-seismic"
+      "tech-jacket",
+      "flaxan-leader",
+      "aquarus",
+      "universa"
      ]
     },
     {
      "name": "Universa + Anissa + Blue Mark",
      "core": [
-      "anissa",
       "universa",
+      "anissa",
       "invincible-blue"
      ],
      "flex": [
       "rus-livingston",
+      "tech-jacket",
+      "invincible-blue",
+      "kid-omni-man",
       "doc-seismic",
       "volcanikka"
-     ],
-     "sac": [
-      "kid-omni-man"
-     ]
-    },
-    {
-     "name": "Anissa + Universa",
-     "core": [
-      "anissa",
-      "universa"
-     ],
-     "flex": [
-      "doc-seismic",
-      "volcanikka",
-      "invincible-blue"
-     ],
-     "sac": [
-      "kid-omni-man"
      ]
     }
    ],
-   "rule": "Anissa does most of the work here (pink XP).",
-   "solo": false
+   "rule": "Pink XP. Space Racer, Anissa and Blue Mark carry it (Anissa is the main damage: every enemy is human, so push her level and her 2nd skill); the other two slots are flexible - a second Blue Mark, Rus (2nd skill 10) or Tech Jacket.",
+   "solo": false,
+   "mech": "All enemies are humans, which Anissa's 2nd skill punishes. Give her an attack artifact (Spray Gun or Cloak); Notes can go on a teammate. An unskilled 2nd Space Racer works here if your main one is in Train and Gain."
   },
   {
    "id": "everyone-whos-anyone",
@@ -7204,8 +7185,9 @@
      ]
     }
    ],
-   "rule": "Solo op: one hero only - adding others lowers waves (Cecil alongside Yark is the only pairing players mention).",
-   "solo": true
+   "rule": "Solo op: one hero only. Brit (with Oxygen Helmet) or Yark; Cecil at the back is the only partner that doesn't cost waves.",
+   "solo": true,
+   "mech": "A solo hero fully dies instead of being exhausted, so he redoes his opening attack and enemies can't heal or charge while he's down. Anyone added slows that down."
   },
   {
    "id": "guardians-of-the-globe",
@@ -7235,27 +7217,41 @@
    "comps": [
     [
      "komodo-dragon",
+     "shapesmith",
+     "doc-seismic",
+     "king-lizard",
+     "iguana"
+    ],
+    [
+     "komodo-dragon",
      "king-lizard",
      "iguana",
      "lizard-soldier-m",
      "lizard-soldier-f"
     ],
     [
-     "komodo-dragon",
-     "angstrom-levy",
-     "titan",
-     "king-lizard",
-     "iguana"
-    ],
-    [
      "powerplex",
      "mauler-twin-range",
      "mauler-twin-range",
      "mauler-twin-range",
-     "mauler-twin-range"
+     "mauler-twin-melee"
     ]
    ],
    "templates": [
+    {
+     "name": "Doc + Shapesmith + Lizards",
+     "core": [
+      "komodo-dragon",
+      "shapesmith",
+      "doc-seismic"
+     ],
+     "flex": [
+      "king-lizard",
+      "iguana",
+      "angstrom-levy",
+      "titan"
+     ]
+    },
     {
      "name": "Lizard League",
      "core": [
@@ -7267,25 +7263,9 @@
       "lizard-soldier-m",
       "lizard-soldier-f",
       "angstrom-levy",
-      "titan"
+      "titan",
+      "doc-seismic"
      ]
-    },
-    {
-     "name": "Criminals (20% boost)",
-     "core": [
-      "komodo-dragon",
-      "angstrom-levy",
-      "titan"
-     ],
-     "flex": [
-      "king-lizard",
-      "iguana",
-      "magmaniac",
-      "powerplex",
-      "mauler-twin-range",
-      "machine-head"
-     ],
-     "thin": true
     },
     {
      "name": "Maulerplex (filler)",
@@ -7296,19 +7276,20 @@
      "flex": [
       "mauler-twin-range",
       "mauler-twin-range",
-      "mauler-twin-range"
+      "mauler-twin-melee"
      ],
      "thin": true
     }
    ],
-   "rule": "Armour (gear) op, low priority: players fill it with heroes no better op needs. Criminals get a 20% faction boost here. A Lizard League team (Komodo, King Lizard, Iguana + the 2 common Lizard soldiers) reaches ~1,400 waves without taking anyone from other ops.",
-   "solo": false
+   "rule": "Armour (gear) op, low priority. Criminals get +20% here. Lizard League + Doc + Shapesmith is the comp top players run (~1,550 waves); fill with leftovers otherwise.",
+   "solo": false,
+   "mech": "Criminal faction boost (+20%). Shapesmith is the one non-Criminal players rate highly here."
   },
   {
    "id": "reanimen-rampage",
    "name": "Reanimen Rampage",
    "short": "RR",
-   "reward": "Mixed (XP, gold, access cards)",
+   "reward": "Blue XP (late game), gold, access cards",
    "priority": "low",
    "now": "Cecil Stedman in slot 5. At high ranks Cecil can carry it alone with four level-1 Multi-Pauls as sacrifices.",
    "comp": null,
@@ -7334,11 +7315,18 @@
      "multi-paul"
     ],
     [
+     "universa",
+     "omni-man",
+     "omni-man",
+     "omni-man",
+     "omni-man"
+    ],
+    [
      "powerplex",
      "mauler-twin-range",
      "mauler-twin-melee",
-     "angstrom-levy",
-     "battle-beast"
+     "mauler-twin-range",
+     "mauler-twin-melee"
     ]
    ],
    "templates": [
@@ -7352,6 +7340,24 @@
       "multi-paul",
       "multi-paul",
       "multi-paul"
+     ],
+     "sacAny": [
+      "omni-man"
+     ]
+    },
+    {
+     "name": "Universa + sacrifices",
+     "core": [
+      "universa"
+     ],
+     "sac": [
+      "omni-man",
+      "omni-man",
+      "omni-man",
+      "omni-man"
+     ],
+     "sacAny": [
+      "multi-paul"
      ]
     },
     {
@@ -7362,20 +7368,22 @@
       "mauler-twin-melee"
      ],
      "flex": [
-      "angstrom-levy",
-      "battle-beast"
+      "mauler-twin-range",
+      "mauler-twin-melee",
+      "angstrom-levy"
      ]
     }
    ],
-   "rule": "Cecil carries it with sacrifices, or a Mauler team.",
-   "solo": false
+   "rule": "Blue XP late game. One strong hero plus four level-1 sacrifices: Cecil + 4 Multi-Pauls, or Universa + 4 level-1 Omni-Men (~315 waves for a top-100 player). A Mauler team gets ~300.",
+   "solo": false,
+   "mech": "Sacrifices only need to die: rank and level don't matter, so use spare low copies rather than built heroes."
   },
   {
    "id": "schools-out",
    "name": "Schools Out",
    "short": "SO",
    "reward": "Heros",
-   "priority": "medium",
+   "priority": "low",
    "now": "Space Racer, Anissa, Tech Jacket, Anissa, Aquarus.",
    "comp": null,
    "hubComps": [
@@ -7398,8 +7406,8 @@
      "space-racer",
      "anissa",
      "tech-jacket",
-     "invincible-blue",
-     "tech-jacket"
+     "aquarus",
+     "aquarus"
     ]
    ],
    "templates": [
@@ -7411,8 +7419,7 @@
       "tech-jacket"
      ],
      "flex": [
-      "invincible-blue",
-      "tech-jacket"
+      "invincible-blue"
      ],
      "sac": [
       "aquarus",
@@ -7420,8 +7427,9 @@
      ]
     }
    ],
-   "rule": "Only worth running during All Hands on Deck events (rewards come from the recruitment pool).",
-   "solo": false
+   "rule": "Only worth running during All Hands on Deck events: the heroes it gives come from the normal recruitment pool, so that's the only time event heroes can drop. Use your fastest team (your Space Racer team).",
+   "solo": false,
+   "mech": ""
   },
   {
    "id": "this-is-heavy",
@@ -7473,9 +7481,16 @@
     [
      "thragg",
      "general-kregg",
+     "multi-paul",
+     "multi-paul",
+     "multi-paul"
+    ],
+    [
+     "thragg",
+     "general-kregg",
      "conquest",
-     "cecil-stedman",
-     "invincible-blue"
+     "multi-paul",
+     "nolan"
     ],
     [
      "thragg",
@@ -7487,7 +7502,7 @@
    ],
    "templates": [
     {
-     "name": "Thragg + Kregg + Multi-Paul sacrifices",
+     "name": "Thragg + Kregg + sacrifices",
      "core": [
       "thragg",
       "general-kregg"
@@ -7497,14 +7512,37 @@
       "multi-paul",
       "multi-paul"
      ],
+     "sacAny": [
+      "thula",
+      "kid-omni-man"
+     ],
      "flex": [
       "conquest",
+      "nolan",
       "cecil-stedman",
       "invincible-blue",
       "anissa",
-      "agent-spider",
-      "tech-jacket",
-      "doc-seismic"
+      "agent-spider"
+     ]
+    },
+    {
+     "name": "Thragg + Kregg + Conquest + Nolan",
+     "core": [
+      "thragg",
+      "general-kregg",
+      "conquest"
+     ],
+     "flex": [
+      "nolan",
+      "cecil-stedman",
+      "invincible-blue"
+     ],
+     "sac": [
+      "multi-paul"
+     ],
+     "sacAny": [
+      "thula",
+      "kid-omni-man"
      ]
     },
     {
@@ -7523,8 +7561,9 @@
      "thin": true
     }
    ],
-   "rule": "Kregg's 3rd skill charges Thragg every time an ally dies, so the team feeds him sacrifices: Multi-Pauls at level 1 are fine (his 3rd skill gives two deaths each; Ragnars do much worse). Thragg at the back so the sacrifices get hit first. At higher op ranks swap sacrifices for Conquest, Cecil, Blue Mark, Anissa or Agent Spider.",
-   "solo": false
+   "rule": "Kregg's 3rd skill charges Thragg every time an ally dies, so the team feeds him sacrifices: level-1 Multi-Pauls are best (his 3rd skill gives two deaths each), any level-1 Viltrumite also works; Ragnars do much worse. Thragg at the back so the sacrifices get hit first. Strong accounts swap sacrifices for Conquest and Nolan (~2,200 waves).",
+   "solo": false,
+   "mech": "The op sends Yellow Mark and The Immortal, who have immunity barriers - Conquest handles them. Volcanikka summons work as sacrifices but cost about 400-600 waves."
   },
   {
    "id": "train-and-gain",
@@ -7589,17 +7628,24 @@
     ],
     [
      "space-racer",
+     "aquarus",
+     "aquarus",
      "flaxan-leader",
-     "flaxan-leader",
+     "flaxan-leader"
+    ],
+    [
+     "universa",
+     "aquarus",
+     "aquarus",
      "aquarus",
      "aquarus"
     ],
     [
      "powerplex",
      "mauler-twin-range",
-     "mauler-twin-melee",
      "mauler-twin-range",
-     "mauler-twin-melee"
+     "mauler-twin-range",
+     "mauler-twin-range"
     ]
    ],
    "templates": [
@@ -7634,6 +7680,7 @@
      ],
      "flex": [
       "flaxan-leader",
+      "flaxan-leader",
       "flaxan-leader"
      ],
      "sac": [
@@ -7642,26 +7689,39 @@
      ]
     },
     {
-     "name": "Maulerplex",
+     "name": "Universa + 4 fish",
+     "core": [
+      "universa"
+     ],
+     "sac": [
+      "aquarus",
+      "aquarus",
+      "aquarus",
+      "aquarus"
+     ]
+    },
+    {
+     "name": "Maulerplex (ranged)",
      "core": [
       "powerplex",
       "mauler-twin-range",
-      "mauler-twin-melee"
+      "mauler-twin-range"
      ],
      "flex": [
       "mauler-twin-range",
-      "mauler-twin-melee"
+      "mauler-twin-range"
      ]
     }
    ],
-   "rule": "Space Racer (front left) with Body Enhancement + fish. Tech Jacket adds far less here (~30-40 waves) than in Well Done (~110).",
-   "solo": false
+   "rule": "Space Racer (front left) + 4 fish caps at about 1,600 waves; Tech Jacket in place of a fish adds a little. Only a fully built Maulerplex (Powerplex + 4 ranged Maulers, all Omni+, Mauler Cell \"Not the Clone\") goes past 2,000. Once you hit the wave you want, swap fish for Flaxan Leaders: each adds loot without losing waves.",
+   "solo": false,
+   "mech": "Keep fish at Elite+ (level 160-200): higher ranks unlock a 3rd-skill animation that costs waves. Body Enhancement does little on Space Racer once the fish push his crit to 100%."
   },
   {
    "id": "turn-up-the-heat",
    "name": "Turn Up the Heat",
    "short": "TutH",
-   "reward": null,
+   "reward": "Gold",
    "priority": "low",
    "now": "Gold only - the most common resource. Low priority. Powerplex + ranged Maulers if you run it. Players use 4 fish + a ranged hero, or Powerplex with Mauler Cells + Maulers.",
    "comp": null,
@@ -7700,8 +7760,8 @@
    "comps": [
     [
      "space-racer",
-     "tech-jacket",
-     "anissa",
+     "universa",
+     "aquarus",
      "aquarus",
      "aquarus"
     ],
@@ -7709,8 +7769,15 @@
      "powerplex",
      "mauler-twin-range",
      "mauler-twin-range",
-     "mauler-twin-melee",
-     "angstrom-levy"
+     "mauler-twin-range",
+     "mauler-twin-range"
+    ],
+    [
+     "universa",
+     "aquarus",
+     "aquarus",
+     "aquarus",
+     "aquarus"
     ],
     [
      "aquarus",
@@ -7722,29 +7789,40 @@
    ],
    "templates": [
     {
-     "name": "Space Racer + Tech Jacket + fish",
+     "name": "Space Racer + Universa + fish",
      "core": [
-      "space-racer"
-     ],
-     "flex": [
-      "tech-jacket",
-      "anissa"
+      "space-racer",
+      "universa"
      ],
      "sac": [
+      "aquarus",
       "aquarus",
       "aquarus"
      ]
     },
     {
-     "name": "Maulerplex",
+     "name": "Maulerplex (ranged)",
      "core": [
       "powerplex",
       "mauler-twin-range"
      ],
      "flex": [
       "mauler-twin-range",
-      "mauler-twin-melee",
-      "angstrom-levy"
+      "mauler-twin-range",
+      "mauler-twin-range",
+      "mauler-twin-melee"
+     ]
+    },
+    {
+     "name": "Universa + 4 fish",
+     "core": [
+      "universa"
+     ],
+     "sac": [
+      "aquarus",
+      "aquarus",
+      "aquarus",
+      "aquarus"
      ]
     },
     {
@@ -7759,8 +7837,9 @@
      ]
     }
    ],
-   "rule": "Gold only - lowest priority. Short op: fish teams or Maulerplex.",
-   "solo": false
+   "rule": "Gold only, the lowest priority: players put leftover heroes here or use it to finish the \"20 GDA ops\" weekly. Fish teams or Maulerplex all land in the same place.",
+   "solo": false,
+   "mech": "Short op with weak enemies: a full fish team does about as well as anything."
   },
   {
    "id": "well-done",
@@ -7798,8 +7877,8 @@
      "omni-man",
      "rex-splode",
      "agent-spider",
-     "tech-jacket",
-     "cecil-stedman"
+     "red-rush",
+     "thaedus"
     ],
     [
      "volcanikka",
@@ -7818,9 +7897,14 @@
       "agent-spider"
      ],
      "flex": [
+      "red-rush",
+      "thaedus",
+      "allen-the-alien",
       "tech-jacket",
       "cecil-stedman",
-      "allen-the-alien"
+      "universa",
+      "general-kregg",
+      "doc-seismic"
      ]
     },
     {
@@ -7834,11 +7918,13 @@
       "omni-man",
       "agent-spider",
       "tech-jacket"
-     ]
+     ],
+     "thin": true
     }
    ],
-   "rule": "Crit team makes Omni-Man \"unstoppable\" (needs Rex and Agent Spider 2nd skills); Cecil (3rd skill to 10) and Tech Jacket push waves.",
-   "solo": false
+   "rule": "Late-game op. The crit team (Omni-Man, Rex, Agent Spider) makes Omni-Man \"unstoppable\"; Red Rush, Thaedus or Allen (with the Neural Link chip), Cecil or Tech Jacket fill it out. Players also use it for the Worlds Beyond weekly.",
+   "solo": false,
+   "mech": "Rex and Agent Spider need their 2nd skills levelled for the crit buff to land."
   },
   {
    "id": "food-events",
