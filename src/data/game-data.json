@@ -51,7 +51,7 @@
      "type": "Synergy",
      "unlock": "Elite+",
      "prio": "S",
-     "text": "If there's any Last Line Of Defense Heroes in the team, the team's critical chance is increased by 11 to 25% and their critical damage by 8 to 25% .",
+     "text": "If there's any Last Line Of Defense Heroes in the team, the team's critical chance is increased by 11 to 25% and their critical damage by 8 to 25%.",
      "target": 10,
      "targetWhy": "Players: get his 2nd skill to at least 10 for ops - it's why he's in the Well Done crit team."
     },
@@ -139,7 +139,7 @@
      "type": "Synergy",
      "unlock": "Elite+",
      "prio": "B",
-     "text": "Allen increases all allies energy resistance by 41 to 45% and energy damage by 41 to 45% when fighting against Heroes from Not of this Earth , while raising his own max HP by 3 to 7% for each Viltrumite on the enemy team."
+     "text": "Allen increases all allies energy resistance by 41 to 45% and energy damage by 41 to 45% when fighting against Heroes from Not of this Earth, while raising his own max HP by 3 to 7% for each Viltrumite on the enemy team."
     },
     {
      "slot": 3,
@@ -299,7 +299,7 @@
      "type": "Main ability",
      "unlock": "start",
      "prio": "A",
-     "text": "Anissa pushes the enemy and then punches them out of the battle for a duration of 3 to 5 seconds, dealing 365 to 420% of her base attack damage in total, reducing their main ability charge by 15 to 25% . Cooldown 21 to 20 seconds."
+     "text": "Anissa pushes the enemy and then punches them out of the battle for a duration of 3 to 5 seconds, dealing 365 to 420% of her base attack damage in total, reducing their main ability charge by 15 to 25%. Cooldown 21 to 20 seconds."
     },
     {
      "slot": 2,
@@ -307,7 +307,7 @@
      "type": "Synergy",
      "unlock": "Elite+",
      "prio": "S",
-     "text": "Anissa reduces the enemies' defense by 5.2 to 6% of her attack stat for each Human on the enemy team. In addition, she increases her Viltrumite allies' critical damage by 10 to 20% .",
+     "text": "Anissa reduces the enemies' defense by 5.2 to 6% of her attack stat for each Human on the enemy team. In addition, she increases her Viltrumite allies' critical damage by 10 to 20%.",
      "to15": true
     },
     {
@@ -498,7 +498,7 @@
      "type": "First passive",
      "unlock": "Exceptional+",
      "prio": "A",
-     "text": "When an ally receives any shield, the value of the shield increases by 17 to 18% . In addition, the ally that receives the shield is healed for 11 to 12% of Atom Eve's max HP and their energy attack is increased by 15 to 30% for 7 seconds."
+     "text": "When an ally receives any shield, the value of the shield increases by 17 to 18%. In addition, the ally that receives the shield is healed for 11 to 12% of Atom Eve's max HP and their energy attack is increased by 15 to 30% for 7 seconds."
     },
     {
      "slot": 4,
@@ -603,7 +603,7 @@
      "type": "Second passive",
      "unlock": "Epic+",
      "prio": "A",
-     "text": "Once per battle, when Atom Eve's HP drops to 1% , she restores 33 to 50% of her maximum HP and fires an infinite beam in her target's direction, dealing 13 to 25% of her max HP as true damage to all enemies hit, while applying a burn that deals a total of 400 to 510% of her base attack damage over 10 seconds. She is then stunned for 3.5 to 1.5 seconds."
+     "text": "Once per battle, when Atom Eve's HP drops to 1%, she restores 33 to 50% of her maximum HP and fires an infinite beam in her target's direction, dealing 13 to 25% of her max HP as true damage to all enemies hit, while applying a burn that deals a total of 400 to 510% of her base attack damage over 10 seconds. She is then stunned for 3.5 to 1.5 seconds."
     }
    ],
    "artifacts": [],
@@ -677,7 +677,7 @@
      "type": "Synergy",
      "unlock": "Elite+",
      "prio": "A",
-     "text": "When fighting against Viltrumites , Battle Beast grants all allies a 11 to 20% Life Leech. Additionally, when fighting alongside a Coalition Of Planets ally, he gains a 2 to 8% Attack boost for every 5% of HP loss."
+     "text": "When fighting against Viltrumites, Battle Beast grants all allies a 11 to 20% Life Leech. Additionally, when fighting alongside a Coalition Of Planets ally, he gains a 2 to 8% Attack boost for every 5% of HP loss."
     },
     {
      "slot": 3,
@@ -693,7 +693,7 @@
      "type": "Second passive",
      "unlock": "Epic+",
      "prio": "F",
-     "text": "When the target's HP is at 68 to 55% or higher, Battle Beast's damage increases by 46 to 60% but his defense reduces by 15 to 10% . Battle Beast always targets the enemy with the highest attack."
+     "text": "When the target's HP is at 68 to 55% or higher, Battle Beast's damage increases by 46 to 60% but his defense reduces by 15 to 10%. Battle Beast always targets the enemy with the highest attack."
     }
    ],
    "artifacts": [],
@@ -765,7 +765,7 @@
      "type": "Synergy",
      "unlock": "Elite+",
      "prio": "B",
-     "text": "When fighting against members of The Order , Black Samson takes 51 to 55% less damage. At the beginning of the wave, if there's an Original Guardian of the Globe on the allied team, he generates a 10 to 30% bounce back shield for 10 seconds around them."
+     "text": "When fighting against members of The Order, Black Samson takes 51 to 55% less damage. At the beginning of the wave, if there's an Original Guardian of the Globe on the allied team, he generates a 10 to 30% bounce back shield for 10 seconds around them."
     },
     {
      "slot": 3,
@@ -773,7 +773,7 @@
      "type": "First passive",
      "unlock": "Exceptional+",
      "prio": "A",
-     "text": "When Black Samson's HP goes below 30 to 35% , he starts regenerating 3.1 to 3.5% of his max HP every 1 seconds, and increases his defense by 10 to 25% ."
+     "text": "When Black Samson's HP goes below 30 to 35%, he starts regenerating 3.1 to 3.5% of his max HP every 1 seconds, and increases his defense by 10 to 25%."
     }
    ],
    "artifacts": [],
@@ -829,7 +829,7 @@
      "type": "Main ability",
      "unlock": "start",
      "prio": "A",
-     "text": "Passive: Brit is immune to Stun effects and becomes Exhausted instead of dying when his HP reaches 0 . When his HP is restored to 27 to 25% , he rejoins the battle. Active: Brit detonates a bomb in his own hands, dealing Energy Damage equal to 710 to 750% of his Defense to all enemies over a large area. Affected enemies also take Burn Damage equal to 400 to 450% of his Attack over 10 seconds and have their Healing Received reduced by 40 to 50% for 10 seconds. Brit then restores 6 to 10% of his max HP for each enemy hit. Cooldown: 18 seconds."
+     "text": "Passive: Brit is immune to Stun effects and becomes Exhausted instead of dying when his HP reaches 0. When his HP is restored to 27 to 25%, he rejoins the battle. Active: Brit detonates a bomb in his own hands, dealing Energy Damage equal to 710 to 750% of his Defense to all enemies over a large area. Affected enemies also take Burn Damage equal to 400 to 450% of his Attack over 10 seconds and have their Healing Received reduced by 40 to 50% for 10 seconds. Brit then restores 6 to 10% of his max HP for each enemy hit. Cooldown: 18 seconds."
     },
     {
      "slot": 2,
@@ -923,7 +923,7 @@
      "type": "Synergy",
      "unlock": "Elite+",
      "prio": "B",
-     "text": "If there are any Humans on the team, Bulletproof decreases the damage received from ranged enemies by 17 to 25% . In addition, he increases his own critical damage by 5 to 10% for each Guardians of the Globe ally"
+     "text": "If there are any Humans on the team, Bulletproof decreases the damage received from ranged enemies by 17 to 25%. In addition, he increases his own critical damage by 5 to 10% for each Guardians of the Globe ally"
     },
     {
      "slot": 3,
@@ -1006,7 +1006,7 @@
      "type": "Synergy",
      "unlock": "Elite+",
      "prio": "A",
-     "text": "When fighting alongside a \"Human\" , Capevincible increases his life leech by 13 to 24% . Additionally, every time a human dies, Capevincible gains a 4 to 8.5% Attack boost (max. 10 stacks)."
+     "text": "When fighting alongside a \"Human\", Capevincible increases his life leech by 13 to 24%. Additionally, every time a human dies, Capevincible gains a 4 to 8.5% Attack boost (max. 10 stacks)."
     },
     {
      "slot": 3,
@@ -1347,7 +1347,7 @@
      "type": "Main ability",
      "unlock": "start",
      "prio": "?",
-     "text": "Damien Darkblood leaps into the air, swinging Beastimagoria in a wide arc before crashing into the ground, hitting all nearby enemies. Enemies hit take Physical Damage equal to 620 to 700% of his Defense and are Taunted for 4 to 6 seconds. The impact also creates a fiery crater that lasts 12 seconds, applying Burning to enemies standing within it ( 175 to 300% of his base Attack damage over 3 seconds). Finally, Damien gains 20 to 35% Bounceback for 10 to 12 seconds. Cooldown: 19 seconds."
+     "text": "Damien Darkblood leaps into the air, swinging Beastimagoria in a wide arc before crashing into the ground, hitting all nearby enemies. Enemies hit take Physical Damage equal to 620 to 700% of his Defense and are Taunted for 4 to 6 seconds. The impact also creates a fiery crater that lasts 12 seconds, applying Burning to enemies standing within it (175 to 300% of his base Attack damage over 3 seconds). Finally, Damien gains 20 to 35% Bounceback for 10 to 12 seconds. Cooldown: 19 seconds."
     },
     {
      "slot": 2,
@@ -1355,7 +1355,7 @@
      "type": "Synergy",
      "unlock": "Elite+",
      "prio": "?",
-     "text": "Damien Darkblood gains 5 to 10% Defense for each other Subsoil ally on the battlefield (max. 10 ). Additionally, if there is another Last Line of Defense ally on the battlefield, all allies gain 5 to 10% Life Leech."
+     "text": "Damien Darkblood gains 5 to 10% Defense for each other Subsoil ally on the battlefield (max. 10). Additionally, if there is another Last Line of Defense ally on the battlefield, all allies gain 5 to 10% Life Leech."
     },
     {
      "slot": 3,
@@ -1363,7 +1363,7 @@
      "type": "First passive",
      "unlock": "Exceptional+",
      "prio": "?",
-     "text": "At the start of the battle, and whenever Damien Darkblood's target is not adjacent to him, he lunges forward, slashing through his target and all adjacent enemies before stopping behind them. Enemies hit are afflicted with Bleeding ( 200 to 300% of his base Attack damage over 9 seconds) and are Taunted for 4 to 6 seconds. Additionally, while affected by any Damage over Time effect, they have their Physical Attack reduced by 10 to 30% . Cooldown: 9 seconds."
+     "text": "At the start of the battle, and whenever Damien Darkblood's target is not adjacent to him, he lunges forward, slashing through his target and all adjacent enemies before stopping behind them. Enemies hit are afflicted with Bleeding (200 to 300% of his base Attack damage over 9 seconds) and are Taunted for 4 to 6 seconds. Additionally, while affected by any Damage over Time effect, they have their Physical Attack reduced by 10 to 30%. Cooldown: 9 seconds."
     },
     {
      "slot": 4,
@@ -1443,7 +1443,7 @@
      "type": "Synergy",
      "unlock": "Elite+",
      "prio": "B",
-     "text": "When an enemy kills a Human ally, Darkwing stuns the enemy that performed the kill for 4.1 to 4.5 seconds. Additionally, if there's an Original Guardian of the Globe ally, he reduce enemies' critical chance by 20 to 35% ."
+     "text": "When an enemy kills a Human ally, Darkwing stuns the enemy that performed the kill for 4.1 to 4.5 seconds. Additionally, if there's an Original Guardian of the Globe ally, he reduce enemies' critical chance by 20 to 35%."
     },
     {
      "slot": 3,
@@ -1592,7 +1592,7 @@
      "type": "Main ability",
      "unlock": "start",
      "prio": "A",
-     "text": "Dinosaurus savagely attacks his target, dealing 280 to 300% of his current HP as damage, applying a bleeding effect that deals a total of 380 to 400% damage over 10 seconds. He then pushes the target back and gains a shield equal to 85 to 100% of his current HP for 5 seconds, while increasing the charges of \"Having Fun\" by 3 . Cooldown: 16 to 15 seconds."
+     "text": "Dinosaurus savagely attacks his target, dealing 280 to 300% of his current HP as damage, applying a bleeding effect that deals a total of 380 to 400% damage over 10 seconds. He then pushes the target back and gains a shield equal to 85 to 100% of his current HP for 5 seconds, while increasing the charges of \"Having Fun\" by 3. Cooldown: 16 to 15 seconds."
     },
     {
      "slot": 2,
@@ -1608,7 +1608,7 @@
      "type": "First passive",
      "unlock": "Exceptional+",
      "prio": "A",
-     "text": "Dinosaurus gains 1 charge each time he attacks an enemy affected by bleeding. Upon reaching 14 to 10 charges, he heals himself for 12 to 20% of his max HP and increases his team's main skill charge by 10 to 20% . All charges are consumed."
+     "text": "Dinosaurus gains 1 charge each time he attacks an enemy affected by bleeding. Upon reaching 14 to 10 charges, he heals himself for 12 to 20% of his max HP and increases his team's main skill charge by 10 to 20%. All charges are consumed."
     },
     {
      "slot": 4,
@@ -1691,7 +1691,7 @@
      "type": "Synergy",
      "unlock": "Elite+",
      "prio": "B",
-     "text": "Viltrumite enemies see their energy defense reduced by 41 to 45% . In addition, he increases his team's HP by 5 to 10% for each Subsoil ally."
+     "text": "Viltrumite enemies see their energy defense reduced by 41 to 45%. In addition, he increases his team's HP by 5 to 10% for each Subsoil ally."
     },
     {
      "slot": 3,
@@ -1784,7 +1784,7 @@
      "type": "Synergy",
      "unlock": "Elite+",
      "prio": "A",
-     "text": "When fighting alongside a \"Leader\" , Donald increases his team's Defense by 12 to 20% . Additionally, he gains a 10 to 25% critical damage boost each time a 'Cecil's Secret' ally is defeated (up to 10 stacks)."
+     "text": "When fighting alongside a \"Leader\", Donald increases his team's Defense by 12 to 20%. Additionally, he gains a 10 to 25% critical damage boost each time a 'Cecil's Secret' ally is defeated (up to 10 stacks)."
     },
     {
      "slot": 3,
@@ -1792,7 +1792,7 @@
      "type": "First passive",
      "unlock": "Exceptional+",
      "prio": "A",
-     "text": "After each fire burst, Donald gains a 1.25 to 2.5% critical chance boost (up to 100% ). If he is stunned, he loses 80 to 30% of the accumulated critical chance (minimum 0% ) and becomes immune to all damage for 4 to 5 seconds, this effect can trigger 1 time(s) per battle. Additionally, every 6 to 4 fire bursts, Donald dashes away from his target and gains a 14 to 24% critical damage boost for 3 seconds."
+     "text": "After each fire burst, Donald gains a 1.25 to 2.5% critical chance boost (up to 100%). If he is stunned, he loses 80 to 30% of the accumulated critical chance (minimum 0%) and becomes immune to all damage for 4 to 5 seconds, this effect can trigger 1 time(s) per battle. Additionally, every 6 to 4 fire bursts, Donald dashes away from his target and gains a 14 to 24% critical damage boost for 3 seconds."
     },
     {
      "slot": 4,
@@ -1940,7 +1940,7 @@
      "type": "Synergy",
      "unlock": "Elite+",
      "prio": "S",
-     "text": "When fighting against Humans , the Flaxan Leader increases the resources obtained from GDA Ops by 11 to 12% . At the beginning of the wave, if there are any Invader allies in the team, he becomes immune for 5 to 9 seconds."
+     "text": "When fighting against Humans, the Flaxan Leader increases the resources obtained from GDA Ops by 11 to 12%. At the beginning of the wave, if there are any Invader allies in the team, he becomes immune for 5 to 9 seconds."
     },
     {
      "slot": 3,
@@ -2087,7 +2087,7 @@
      "type": "First passive",
      "unlock": "Exceptional+",
      "prio": "S",
-     "text": "When an ally is defeated, General Kregg charges the main skill of the ally with the highest attack by 62 to 75% , increases their attack by 41 to 45% for 10 seconds, and increases their critical chance by 10 to 20% for 10 seconds, while forcing them to target the enemy that dealt the finishing blow.",
+     "text": "When an ally is defeated, General Kregg charges the main skill of the ally with the highest attack by 62 to 75%, increases their attack by 41 to 45% for 10 seconds, and increases their critical chance by 10 to 20% for 10 seconds, while forcing them to target the enemy that dealt the finishing blow.",
      "to15": true
     },
     {
@@ -2196,7 +2196,7 @@
      "type": "Second passive",
      "unlock": "Epic+",
      "prio": "F",
-     "text": "When Green Ghost's HP is below 26 to 30% , she becomes invisible for 6 to 7 seconds, boosting her ability charge rate by 60 to 65% and healing herself for 10 to 15% of her max HP. Cooldown: 15 seconds."
+     "text": "When Green Ghost's HP is below 26 to 30%, she becomes invisible for 6 to 7 seconds, boosting her ability charge rate by 60 to 65% and healing herself for 10 to 15% of her max HP. Cooldown: 15 seconds."
     }
    ],
    "artifacts": [],
@@ -2269,7 +2269,7 @@
      "type": "First passive",
      "unlock": "Exceptional+",
      "prio": "A",
-     "text": "Iguana applies Wounds on critical strikes, dealing 190 to 265% of her base attack damage over 3 seconds. Additionally, if Iguana kills an enemy, her main ability charges up by 10 to 50% ."
+     "text": "Iguana applies Wounds on critical strikes, dealing 190 to 265% of her base attack damage over 3 seconds. Additionally, if Iguana kills an enemy, her main ability charges up by 10 to 50%."
     },
     {
      "slot": 4,
@@ -2346,7 +2346,7 @@
      "type": "Synergy",
      "unlock": "Elite+",
      "prio": "F",
-     "text": "While fighting alongside a Last Line of Defense ally, the team's ability cooldowns are shortened by 7 to 15% . Additionally, when fighting alongside a Coalition of Planets ally, Invincible increases his Attack by 5 to 15% ."
+     "text": "While fighting alongside a Last Line of Defense ally, the team's ability cooldowns are shortened by 7 to 15%. Additionally, when fighting alongside a Coalition of Planets ally, Invincible increases his Attack by 5 to 15%."
     },
     {
      "slot": 3,
@@ -2354,7 +2354,7 @@
      "type": "First passive",
      "unlock": "Exceptional+",
      "prio": "A",
-     "text": "When Invincible's HP reaches 20% , his Viltrumite Powers are triggered and he is immune to all damage for 5.8 to 7 seconds. This also increases his energy attack by 5 to 50% for 6 to 8 seconds. This ability has a cooldown of 28 to 27 seconds."
+     "text": "When Invincible's HP reaches 20%, his Viltrumite Powers are triggered and he is immune to all damage for 5.8 to 7 seconds. This also increases his energy attack by 5 to 50% for 6 to 8 seconds. This ability has a cooldown of 28 to 27 seconds."
     },
     {
      "slot": 4,
@@ -2462,7 +2462,7 @@
      "type": "Synergy",
      "unlock": "Elite+",
      "prio": "S",
-     "text": "When fighting alongside at least one other attacker , all melee allies gain 7 to 10% life leech and a 8 to 12% attack boost each time Invincible kills an enemy (stack up to a max 6 to 7 times). If the enemy is an Invader or a Viltrumite , Invincible gains an extra 5% life leech and a 1 to 8% attack boost.",
+     "text": "When fighting alongside at least one other attacker, all melee allies gain 7 to 10% life leech and a 8 to 12% attack boost each time Invincible kills an enemy (stack up to a max 6 to 7 times). If the enemy is an Invader or a Viltrumite, Invincible gains an extra 5% life leech and a 1 to 8% attack boost.",
      "to15": true
     },
     {
@@ -2471,7 +2471,7 @@
      "type": "First passive",
      "unlock": "Exceptional+",
      "prio": "A",
-     "text": "When Invincible has any Shield, Immunity or Bounceback active, his basic attacks deal an extra 3 to 6.5% True Damage and grant 3 to 15% Life Leech. Once per battle, when an ally's HP drops to 15% , he dashes toward the enemy that dealt the damage and Taunts them, becoming immune to all damage for 4.5 to 6.75 seconds."
+     "text": "When Invincible has any Shield, Immunity or Bounceback active, his basic attacks deal an extra 3 to 6.5% True Damage and grant 3 to 15% Life Leech. Once per battle, when an ally's HP drops to 15%, he dashes toward the enemy that dealt the damage and Taunts them, becoming immune to all damage for 4.5 to 6.75 seconds."
     },
     {
      "slot": 4,
@@ -2479,7 +2479,7 @@
      "type": "Second passive",
      "unlock": "Epic+",
      "prio": "S",
-     "text": "When an enemy's HP drops to 22 to 25% , Invincible rushes in to deliver a series of 4 headbutts, dealing a total of 18 to 25% of the enemy's max HP as True Damage. In BOSS Raid , this damage is instead based on 60 to 120% of Invincible's max HP. However, Invincible also takes 32 to 15% of the damage dealt as True Damage. Additionally, his main skill charges by 5 to 35% . Cooldown: 10 to 8 seconds."
+     "text": "When an enemy's HP drops to 22 to 25%, Invincible rushes in to deliver a series of 4 headbutts, dealing a total of 18 to 25% of the enemy's max HP as True Damage. In BOSS Raid, this damage is instead based on 60 to 120% of Invincible's max HP. However, Invincible also takes 32 to 15% of the damage dealt as True Damage. Additionally, his main skill charges by 5 to 35%. Cooldown: 10 to 8 seconds."
     }
    ],
    "artifacts": [
@@ -2647,7 +2647,7 @@
      "type": "Synergy",
      "unlock": "Elite+",
      "prio": "F",
-     "text": "When fighting alongside Heroes from the \"Last Line of Defense\" , Kid Omni-Man increases his team's healing received by 7 to 20% . He also increases the damage he inflicts to \"Malefactors\" by 10 to 30% ."
+     "text": "When fighting alongside Heroes from the \"Last Line of Defense\", Kid Omni-Man increases his team's healing received by 7 to 20%. He also increases the damage he inflicts to \"Malefactors\" by 10 to 30%."
     },
     {
      "slot": 3,
@@ -2802,7 +2802,7 @@
      "type": "Main ability",
      "unlock": "start",
      "prio": "A",
-     "text": "Komodo Dragon bites the enemy three times. Each bite deals 13 to 25% of his Defense as True Damage and has a 50 to 130% Life Leech. Each bite also applies a Wound stack that deals a total of 130 to 240% of his base Attack damage over 10 seconds (max stacks: 3 ). Cooldown: 22 to 20 seconds."
+     "text": "Komodo Dragon bites the enemy three times. Each bite deals 13 to 25% of his Defense as True Damage and has a 50 to 130% Life Leech. Each bite also applies a Wound stack that deals a total of 130 to 240% of his base Attack damage over 10 seconds (max stacks: 3). Cooldown: 22 to 20 seconds."
     },
     {
      "slot": 2,
@@ -2826,7 +2826,7 @@
      "type": "Second passive",
      "unlock": "Epic+",
      "prio": "A",
-     "text": "Komodo Dragon slams the ground, increasing his defense by 22 to 45% for 7 to 10 seconds, then deals damage equal to 460 to 525% of his defense to all nearby ground-level enemies, taunting them for 3 to 10 seconds and reducing their ability charge by 10 to 20% . Cooldown: 14 to 11 seconds."
+     "text": "Komodo Dragon slams the ground, increasing his defense by 22 to 45% for 7 to 10 seconds, then deals damage equal to 460 to 525% of his defense to all nearby ground-level enemies, taunting them for 3 to 10 seconds and reducing their ability charge by 10 to 20%. Cooldown: 14 to 11 seconds."
     }
    ],
    "artifacts": [],
@@ -3234,7 +3234,7 @@
      "type": "Synergy",
      "unlock": "Elite+",
      "prio": "F",
-     "text": "When a member of The Order is on the same team, Magmaniac reduces all enemies' max HP by 9.2 to 10% . When fighting against Guardian of the Globe enemies, he increases the team's damage over time by 5 to 25% ."
+     "text": "When a member of The Order is on the same team, Magmaniac reduces all enemies' max HP by 9.2 to 10%. When fighting against Guardian of the Globe enemies, he increases the team's damage over time by 5 to 25%."
     },
     {
      "slot": 3,
@@ -3367,7 +3367,7 @@
      "type": "First passive",
      "unlock": "Exceptional+",
      "prio": "F",
-     "text": "When Martian Man's HP reaches 15% , he melts to the floor and becomes invisible (forcing enemies to change targets) for 4 to 5 seconds and heals 41 to 45% of his max HP. He screams while emerging from the ground, which increases the team's defenses by 16 to 20% for 7 seconds and deals 150 to 250 damage to the enemies around him. The ability has a cooldown of 20 seconds."
+     "text": "When Martian Man's HP reaches 15%, he melts to the floor and becomes invisible (forcing enemies to change targets) for 4 to 5 seconds and heals 41 to 45% of his max HP. He screams while emerging from the ground, which increases the team's defenses by 16 to 20% for 7 seconds and deals 150 to 250 damage to the enemies around him. The ability has a cooldown of 20 seconds."
     }
    ],
    "artifacts": [],
@@ -3773,7 +3773,7 @@
      "type": "Synergy",
      "unlock": "Elite+",
      "prio": "A",
-     "text": "Whenever a 'Viltrumite' , ally or enemy, is defeated, Nolan gains a 3.6 to 5% attack boost (max. 6 to 10 stacks). If the enemy team contains any 'Last Line of Defense' units, he also grants his team a 10 to 20% critical chance boost."
+     "text": "Whenever a 'Viltrumite', ally or enemy, is defeated, Nolan gains a 3.6 to 5% attack boost (max. 6 to 10 stacks). If the enemy team contains any 'Last Line of Defense' units, he also grants his team a 10 to 20% critical chance boost."
     },
     {
      "slot": 3,
@@ -3857,7 +3857,7 @@
      "type": "Synergy",
      "unlock": "Elite+",
      "prio": "S",
-     "text": "When fighting against Humans , the whole team gets a life leech of 11 to 12% . Increases his own critical chance by 10 to 50% when fighting against Viltrumites ."
+     "text": "When fighting against Humans, the whole team gets a life leech of 11 to 12%. Increases his own critical chance by 10 to 50% when fighting against Viltrumites."
     },
     {
      "slot": 3,
@@ -3865,7 +3865,7 @@
      "type": "First passive",
      "unlock": "Exceptional+",
      "prio": "S",
-     "text": "After performing 4 to 3 critical hits, the next attack has a 100% Critical Chance, deals 190 to 300% Critical Damage, increases Omni-Man's Defense by 2.5 to 3.5% (max. 10 stacks) and charges his main ability cooldown by -5 to -20% ."
+     "text": "After performing 4 to 3 critical hits, the next attack has a 100% Critical Chance, deals 190 to 300% Critical Damage, increases Omni-Man's Defense by 2.5 to 3.5% (max. 10 stacks) and charges his main ability cooldown by -5 to -20%."
     },
     {
      "slot": 4,
@@ -3950,7 +3950,7 @@
      "type": "Main ability",
      "unlock": "start",
      "prio": "B",
-     "text": "Powerplex triggers an electric field that deals 80 to 165% of his base attack damage per second to all enemies inside the field. He also reduces their healing by 45 to 90% . While casting it, he bounces back 42 to 65% of the damage received, and is immune to crowd control effects. After 4 seconds, the electric field explodes, dealing 150 to 200% of Powerplex's base attack damage to all enemies and reducing their critical chance by 60 to 100% for 5 to 7 seconds. Cooldown 23 to 22 seconds."
+     "text": "Powerplex triggers an electric field that deals 80 to 165% of his base attack damage per second to all enemies inside the field. He also reduces their healing by 45 to 90%. While casting it, he bounces back 42 to 65% of the damage received, and is immune to crowd control effects. After 4 seconds, the electric field explodes, dealing 150 to 200% of Powerplex's base attack damage to all enemies and reducing their critical chance by 60 to 100% for 5 to 7 seconds. Cooldown 23 to 22 seconds."
     },
     {
      "slot": 2,
@@ -4029,7 +4029,7 @@
      "type": "Main ability",
      "unlock": "start",
      "prio": "?",
-     "text": "The Ragnars first push the target back, then dash toward them one by one, removing 1 buff, while each dealing 144 to 150% Physical Damage with 100 to 150% Life Leech, and applying 2 stacks (max. 10 ) of 81 to 85% Wound Damage over 5 seconds. Cooldown: 10 seconds."
+     "text": "The Ragnars first push the target back, then dash toward them one by one, removing 1 buff, while each dealing 144 to 150% Physical Damage with 100 to 150% Life Leech, and applying 2 stacks (max. 10) of 81 to 85% Wound Damage over 5 seconds. Cooldown: 10 seconds."
     },
     {
      "slot": 2,
@@ -4053,7 +4053,7 @@
      "type": "Second passive",
      "unlock": "Epic+",
      "prio": "?",
-     "text": "The Ragnars attack all enemies in an area around them, instantly killing those below 10% HP. Otherwise, they deal 130% Physical Damage, apply 3 stacks of Wound (max. 10 ), dealing 175% damage over 5 seconds, and reduce the Physical Defense of affected enemies by 15% for 5 seconds. Cooldown 13 seconds."
+     "text": "The Ragnars attack all enemies in an area around them, instantly killing those below 10% HP. Otherwise, they deal 130% Physical Damage, apply 3 stacks of Wound (max. 10), dealing 175% damage over 5 seconds, and reduce the Physical Defense of affected enemies by 15% for 5 seconds. Cooldown 13 seconds."
     }
    ],
    "artifacts": [],
@@ -4170,7 +4170,7 @@
      "type": "Synergy",
      "unlock": "Elite+",
      "prio": "S",
-     "text": "Red Rush increases his team's critical damage by 45 to 50% when fighting against Attackers . In addition, he increases any Original Guardian of the Globe allies' physical defence by 10 to 30% ."
+     "text": "Red Rush increases his team's critical damage by 45 to 50% when fighting against Attackers. In addition, he increases any Original Guardian of the Globe allies' physical defence by 10 to 30%."
     },
     {
      "slot": 3,
@@ -4242,7 +4242,7 @@
      "type": "Main ability",
      "unlock": "start",
      "prio": "B",
-     "text": "Rex Splode throws a bomb, generating a large area of effect explosion, dealing\u00a0 140 to 160% \u00a0of his base attack damage. All enemies hit get burnt and receive\u00a0 210 to 250% \u00a0of his base damage for\u00a0 3 \u00a0seconds, along with a\u00a0 5 to 25% \u00a0energy defence reduction for\u00a0 3 to 5 \u00a0seconds. Cooldown: 15 to 14 seconds."
+     "text": "Rex Splode throws a bomb, generating a large area of effect explosion, dealing 140 to 160% of his base attack damage. All enemies hit get burnt and receive 210 to 250% of his base damage for 3 seconds, along with a 5 to 25% energy defence reduction for 3 to 5 seconds. Cooldown: 15 to 14 seconds."
     },
     {
      "slot": 2,
@@ -4250,7 +4250,7 @@
      "type": "Synergy",
      "unlock": "Elite+",
      "prio": "S",
-     "text": "Rex Splode increases his team's critical chance by\u00a0 26 to 30% \u00a0when fighting against\u00a0 Invaders . Additionally, he reduces\u00a0Lizard League\u00a0enemies' critical damage by\u00a0 15 to 55% ."
+     "text": "Rex Splode increases his team's critical chance by 26 to 30% when fighting against Invaders. Additionally, he reduces Lizard League enemies' critical damage by 15 to 55%."
     },
     {
      "slot": 3,
@@ -4662,7 +4662,7 @@
      "type": "First passive",
      "unlock": "Exceptional+",
      "prio": "A",
-     "text": "After performing Brother in Arms , Shapesmiths alters his appearance to look like one of the adjacent enemies. He almost instantly returns to his original form, confusing nearby enemies for 3.5 to 4.5 seconds. While confused and thus attacking their own team, enemies receive an extra 70 to 100% critical chance and a reduction of 5 to 20% of their defense for 3.5 to 5 seconds."
+     "text": "After performing Brother in Arms, Shapesmiths alters his appearance to look like one of the adjacent enemies. He almost instantly returns to his original form, confusing nearby enemies for 3.5 to 4.5 seconds. While confused and thus attacking their own team, enemies receive an extra 70 to 100% critical chance and a reduction of 5 to 20% of their defense for 3.5 to 5 seconds."
     },
     {
      "slot": 4,
@@ -4753,7 +4753,7 @@
      "type": "Synergy",
      "unlock": "Elite+",
      "prio": "B",
-     "text": "Rae increases Human allies' defense by 15 to 16% for each Guardian Of The Globe on the team. In addition, she reduces Lizard League enemies' critical chance by 15 to 55% ."
+     "text": "Rae increases Human allies' defense by 15 to 16% for each Guardian Of The Globe on the team. In addition, she reduces Lizard League enemies' critical chance by 15 to 55%."
     },
     {
      "slot": 3,
@@ -4941,7 +4941,7 @@
      "type": "Synergy",
      "unlock": "Elite+",
      "prio": "S",
-     "text": "Tech Jacket increases her own Energy Attack and that of all allies by 7 to 12% for each Coalition of Planets member on the team (excluding herself). Additionally, when facing Invaders , Tech Jacket reduces the cooldown of all allies' abilities by 10 to 30% .",
+     "text": "Tech Jacket increases her own Energy Attack and that of all allies by 7 to 12% for each Coalition of Planets member on the team (excluding herself). Additionally, when facing Invaders, Tech Jacket reduces the cooldown of all allies' abilities by 10 to 30%.",
      "to15": true
     },
     {
@@ -5109,7 +5109,7 @@
      "type": "First passive",
      "unlock": "Exceptional+",
      "prio": "A",
-     "text": "Thaedus inflicts Poison on the enemy with the lowest max HP, dealing damage over time equal to 170 to 200% of his max HP as True Damage over 60 seconds. If the target's HP drops below 15% , they are stunned for 3 to 4 seconds. If the target is a Viltrumite, their Defense is reduced by 7 to 10% of Thaedus' defense while the Poison is active. If the target dies, this effect is reapplied to a new enemy."
+     "text": "Thaedus inflicts Poison on the enemy with the lowest max HP, dealing damage over time equal to 170 to 200% of his max HP as True Damage over 60 seconds. If the target's HP drops below 15%, they are stunned for 3 to 4 seconds. If the target is a Viltrumite, their Defense is reduced by 7 to 10% of Thaedus' defense while the Poison is active. If the target dies, this effect is reapplied to a new enemy."
     },
     {
      "slot": 4,
@@ -5191,7 +5191,7 @@
      "type": "Synergy",
      "unlock": "Elite+",
      "prio": "B",
-     "text": "The Immortal reduces the damage received from Viltrumites by 36 to 40% for his team. In addition, the life leech of Original Guardians of the Globe allies increases by 5 to 10% ."
+     "text": "The Immortal reduces the damage received from Viltrumites by 36 to 40% for his team. In addition, the life leech of Original Guardians of the Globe allies increases by 5 to 10%."
     },
     {
      "slot": 3,
@@ -5199,7 +5199,7 @@
      "type": "First passive",
      "unlock": "Exceptional+",
      "prio": "B",
-     "text": "When The Immortal's HP reaches 9 to 10% , he becomes immune for 5 seconds and boosts his energy attack by 27 to 60% for 5 to 7 seconds. The ability has a cooldown of 15 seconds."
+     "text": "When The Immortal's HP reaches 9 to 10%, he becomes immune for 5 seconds and boosts his energy attack by 27 to 60% for 5 to 7 seconds. The ability has a cooldown of 15 seconds."
     },
     {
      "slot": 4,
@@ -5719,7 +5719,7 @@
      "type": "Main ability",
      "unlock": "start",
      "prio": "A",
-     "text": "Volcanikka unleashes a magma wave toward the enemy with the highest Attack, dealing 160 to 200% of her Energy Attack as damage and grounding all flying enemies hit. The wave then leaves a scorched area on the battlefield for 15 seconds, applying Burn damage equal to 175 to 200% of her Attack over 3 seconds, while reducing the Energy Resistance of all enemies in the area by 25 to 35% . This skill is available at the start of the battle. Cooldown: 18 to 17 seconds."
+     "text": "Volcanikka unleashes a magma wave toward the enemy with the highest Attack, dealing 160 to 200% of her Energy Attack as damage and grounding all flying enemies hit. The wave then leaves a scorched area on the battlefield for 15 seconds, applying Burn damage equal to 175 to 200% of her Attack over 3 seconds, while reducing the Energy Resistance of all enemies in the area by 25 to 35%. This skill is available at the start of the battle. Cooldown: 18 to 17 seconds."
     },
     {
      "slot": 2,
@@ -5735,7 +5735,7 @@
      "type": "First passive",
      "unlock": "Exceptional+",
      "prio": "A",
-     "text": "Volcanikka heals herself for 8 to 15% of her max HP when she receives Burn damage. She also gains 17 to 25% Life Leech when dealing damage to enemies affected by Burn damage. Additionally, all shields applied to Volcanikka and her allies are converted into Magma Shields: shield value is reduced by 25 to 15% , but they deal Burn damage equal to 20 to 30% of her Attack per second to nearby enemies for 3 seconds."
+     "text": "Volcanikka heals herself for 8 to 15% of her max HP when she receives Burn damage. She also gains 17 to 25% Life Leech when dealing damage to enemies affected by Burn damage. Additionally, all shields applied to Volcanikka and her allies are converted into Magma Shields: shield value is reduced by 25 to 15%, but they deal Burn damage equal to 20 to 30% of her Attack per second to nearby enemies for 3 seconds."
     },
     {
      "slot": 4,
@@ -5743,7 +5743,7 @@
      "type": "Second passive",
      "unlock": "Epic+",
      "prio": "A",
-     "text": "Volcanikka taps the ground, slightly pushing nearby enemies away and summoning 2 to 3 Magmanites (max. 3 ) with 23 to 25% of her stats. She and her Magmanite allies then gain a shield equal to 20 to 25% of her max HP for 5 seconds. This skill is triggered at the start of the battle. Cooldown: 15 seconds."
+     "text": "Volcanikka taps the ground, slightly pushing nearby enemies away and summoning 2 to 3 Magmanites (max. 3) with 23 to 25% of her stats. She and her Magmanite allies then gain a shield equal to 20 to 25% of her max HP for 5 seconds. This skill is triggered at the start of the battle. Cooldown: 15 seconds."
     }
    ],
    "artifacts": [],

@@ -253,3 +253,13 @@ for h in g['heroes']:
         if i<0:i=t.find('More heroes All heroes')
         if i>=0:s['text']=t[:i].rstrip()
 json.dump(g,open(f'{D}/game-data.json','w'),indent=1)
+# tidy scraped spacing: double spaces, spaces before punctuation, around the "X to Y%" figures
+import re as _re
+for h in g['heroes']:
+    for s in h.get('skills',[]):
+        t=s.get('text','')
+        t=_re.sub(r'\s+',' ',t).strip()
+        t=_re.sub(r'\s+([.,;:!?)%])',r'\1',t)
+        t=_re.sub(r'\(\s+','(',t)
+        s['text']=t
+json.dump(g,open(f'{D}/game-data.json','w'),indent=1)
