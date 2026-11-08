@@ -579,6 +579,27 @@ function finalArtifacts(pvp,raid){const raw=artifactPlan();const fin={};owned().
   const needy=Object.keys(tm).filter(x=>!fin[x]&&!H[x].keepBase).sort((a,b)=>heroImportance(b,pvp&&pvp.team,raid&&raid.team).v-heroImportance(a,pvp&&pvp.team,raid&&raid.team).v);
   if(spare.length&&needy.length){const M=needy.map(x=>spare.map(n=>Math.max(0.01,artFit(n,x,tm[x].team,tm[x].m))*(0.5+heroImportance(x,pvp&&pvp.team,raid&&raid.team).v)));
     bestAssignment(M).forEach((j,i)=>{if(j>=0){const x=needy[i];fin[x]=spare[j];moves[x]={n:spare[j],refill:true};}});}
+  /* optimise the whole set, not just the convenient route: keep trading artifacts between heroes (or taking them from
+     heroes who aren't in any team) while a trade clearly helps the heroes involved. Player-backed moves above stay fixed,
+     and a hero holding his players' first pick keeps it. */
+  {const IMP={};const imp=x=>IMP[x]??(IMP[x]=heroImportance(x,pvp&&pvp.team,raid&&raid.team).v);
+   const W=x=>tm[x]&&!H[x].keepBase?0.5+imp(x):0;const FC={};const F=(n,x)=>{if(!n||!W(x))return 0;const k=n+'|'+x;return FC[k]??(FC[k]=Math.max(0,artFit(n,x,tm[x].team,tm[x].m)));};
+   const fixed=new Set(Object.keys(moves).filter(x=>!moves[x].refill));
+   const firstPick=x=>{const a=artByName(fin[x]);return !!(a&&(a.owners||[])[0]===x);};
+   const all=ownedArts().filter(n=>!/goldenapple/.test(norm(n)));const BKR=b=>({first:4,players:3,hub:2,guide:1}[b]||0);
+   for(let it=0;it<25;it++){let best=null;const holder={};Object.keys(fin).forEach(k=>holder[norm(fin[k])]=k);
+     Object.keys(tm).forEach(x=>{if(!W(x)||fixed.has(x)||firstPick(x))return;const ox=fin[x];
+       all.forEach(n=>{if(norm(n)===norm(ox||''))return;const y=holder[norm(n)];
+         if(y&&(fixed.has(y)||firstPick(y)||H[y].keepBase))return;
+         /* never take an artifact from a hero players/guides back it for, to give it to someone with weaker backing */
+         if(y&&BKR(artBacking(n,x))<BKR(artBacking(n,y)))return;
+         const before=W(x)*F(ox,x)+(y?W(y)*F(n,y):0),after=W(x)*F(n,x)+(y?W(y)*F(ox,y):0),gain=after-before;
+         if(gain>0.05&&after>before*1.2&&(!best||gain>best.gain))best={x,y,n,ox,gain};});});
+     if(!best)break;const {x,y,n,ox}=best;fin[x]=n;if(y){if(ox)fin[y]=ox;else delete fin[y];}}
+   /* rebuild the move list from where everything ends up */
+   Object.keys(moves).forEach(x=>{if(norm(fin[x]||'')===norm(S.heroes[x].artifact||''))delete moves[x];});
+   Object.keys(fin).forEach(x=>{if(!fin[x]||norm(fin[x])===norm(S.heroes[x].artifact||'')||moves[x]&&norm(moves[x].n)===norm(fin[x]))return;if(!W(x))return;moves[x]={n:fin[x],opt:!(moves[x]&&!moves[x].refill),refill:!!(moves[x]&&moves[x].refill)&&false};});
+   Object.keys(moves).forEach(x=>{if(norm(moves[x].n)!==norm(fin[x]||''))delete moves[x];});}
   Object.keys(takenBy).forEach(k=>{if(!takenBy[k])delete takenBy[k];});
   // who loses what (for the card text)
   owned().forEach(k=>{const c=S.heroes[k].artifact;if(c&&norm(fin[k]||'')!==norm(c)){const t=Object.keys(fin).find(x=>norm(fin[x])===norm(c));if(t)takenBy[norm(c)]=t;}});
@@ -623,7 +644,8 @@ function nextMoves(){const ids=owned();const out=[];if(!ids.length)return out;
     const why=bk==='first'?'Players give this artifact to '+nm+' first. ':bk==='players'?'Players use this on '+nm+'. ':bk==='hub'?'GTG Hub recommends it for '+nm+(hubr&&hubr.note?' ('+hubr.note.replace(/\.$/,'')+')':'')+'. ':bk==='guide'?'LincGames lists it for '+nm+'. ':(a&&a.syn?'Players and guides rarely mention this artifact, so this goes by what it does: '+a.syn.why+'. ':'');
     const from=holder[norm(n)];const lost=m.refill?(cur?`${nm}'s ${cur} goes to ${short(H[fin.takenBy[norm(cur)]]?.name||'someone else')}, so he needs a replacement. `:`${nm} has no artifact. `):'';
     const weak=m.refill&&a&&artFit(n,id,[id],'ops')<0.15;
-    out.push({p:m.refill?64:66,st:'go',stl:'Artifact',t:`${n} → ${nm}`,d:lost+(weak?'':why)+(cur&&!m.refill?`${nm} has ${cur} now. `:'')+(from&&from!==id?(()=>{const wi=heroImportance(id).where,wf=heroImportance(from).where;return `Takes it from ${short(H[from].name)}${wf.length?` (${wf.slice(0,2).join(', ')})`:`, who isn't in any of your teams now`}${wi.length?`; ${nm} plays in ${wi.slice(0,2).join(', ')}`:''}. `;})():'Not on anyone at the moment. ')+(weak?`It's the best of what's left, but its ability won't do much for ${nm} - mostly its stats help. `:'')+'Artifacts swap everywhere at once, so this also applies in ops.',hero:id});});}
+    const optT=m.opt&&cur&&fin.takenBy[norm(cur)]&&fin.takenBy[norm(cur)]!==id?`Part of a trade that suits your roster better: ${nm}'s ${cur} goes to ${short(H[fin.takenBy[norm(cur)]].name)}${artFit(n,id,[id],'pvp')<artFit(cur,id,[id],'pvp')?`. It's a small step down for ${nm}, but ${cur} does a lot more there`:''}. `:'';
+    out.push({p:m.refill?64:66,st:'go',stl:'Artifact',t:`${n} → ${nm}`,d:lost+(weak?'':why)+optT+(cur&&!m.refill&&!optT?`${nm} has ${cur} now. `:'')+(from&&from!==id?(()=>{const wi=heroImportance(id).where,wf=heroImportance(from).where;return `Takes it from ${short(H[from].name)}${wf.length?` (${wf.slice(0,2).join(', ')})`:`, who isn't in any of your teams now`}${wi.length?`; ${nm} plays in ${wi.slice(0,2).join(', ')}`:''}. `;})():'Not on anyone at the moment. ')+(weak?`It's the best of what's left, but its ability won't do much for ${nm} - mostly its stats help. `:'')+'Artifacts swap everywhere at once, so this also applies in ops.',hero:id});});}
   // artifacts worth unlocking: each core hero's best artifact you don't own yet
   {const plan=artifactPlan();const own=new Set(ownedArts().map(norm));const seen=new Set();
    [...core].forEach(id=>{const h=H[id];
