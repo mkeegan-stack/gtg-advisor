@@ -329,7 +329,17 @@ function artifactPlan(){const key=JSON.stringify([S.heroes,S.artifacts,S.overrid
     hs=hs.filter(id=>!done[id]);if(!hs.length)return;
     const vs=hs.map(id=>Math.max(...['pvp','ops','raid'].map(m=>heroValue(id,m,mm))));const vmax=Math.max(...vs,1);const w=vs.map((v,i)=>(0.3+0.7*v/vmax)*(0.4+0.6*Math.min(1,impOf[hs[i]]??0.6)));
     const M=hs.map((id,i)=>arts.map(n=>{if(H[id].keepBase&&!norm(n).includes('goldenapple'))return 0;let f=artFit(n,id,home[id].team,home[id].m);if(norm(S.heroes[id].artifact)===norm(n))f*=1.15; /* only move an artifact for a clear gain */return f<0.15?0:f*w[i];}));
-    const asg=bestAssignment(M);asg.forEach((j,i)=>{if(j>=0&&M[i][j]>0)done[hs[i]]=arts[j];});const used=new Set(Object.values(done));arts=arts.filter(n=>!used.has(n));});
+    const asg=bestAssignment(M);
+    /* stability: group the moves into chains (A takes B's artifact, B takes C's...) and only keep a chain
+       if it's clearly better (20%+) than leaving those artifacts where they are - near-ties shouldn't flip back and forth */
+    const curJ=hs.map(id=>arts.findIndex(n=>norm(n)===norm(S.heroes[id].artifact||'')));
+    const par=hs.map((_,i)=>i);const f=i=>par[i]===i?i:(par[i]=f(par[i]));
+    asg.forEach((j,i)=>{if(j<0||j===curJ[i])return;const h=curJ.indexOf(j);if(h>=0)par[f(i)]=f(h);});
+    const grp={};hs.forEach((_,i)=>{const nj=asg[i]>=0&&M[i][asg[i]]>0?asg[i]:-1;if(nj===curJ[i])return;(grp[f(i)]=grp[f(i)]||[]).push(i);});
+    Object.values(grp).forEach(g=>{const all=hs.map((_,i)=>i).filter(i=>g.some(k=>f(k)===f(i)));
+      const nv=all.reduce((t,i)=>t+(asg[i]>=0?M[i][asg[i]]:0),0),cv=all.reduce((t,i)=>t+(curJ[i]>=0?M[i][curJ[i]]:0),0);
+      if(cv>0&&nv<cv*1.2)all.forEach(i=>{asg[i]=curJ[i];});});
+    asg.forEach((j,i)=>{if(j>=0&&M[i][j]>0)done[hs[i]]=arts[j];});const used=new Set(Object.values(done));arts=arts.filter(n=>!used.has(n));});
   /* stage 3: nothing left lying around - spare artifacts go to heroes in any of your teams who end up without one */
   if(arts.length){const tm={};Object.entries(S.teams||{}).forEach(([k,t])=>(t||[]).forEach(id=>{if(H[id]&&S.heroes[id]&&S.heroes[id].owned&&!tm[id])tm[id]={team:t,m:k==='pvp'?'pvp':'ops'};}));
     /* don't take from a hero the plan leaves alone (e.g. a fish holding something) - use what's genuinely spare first */
