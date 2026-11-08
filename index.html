@@ -340,12 +340,14 @@ function artFit(name,id,team,mode){const a=artByName(name);if(!a)return 0;const 
    keeps ~78% of its value, and a level-59 artifact gains only a few % over level 30. */
 function artLevelFactor(lv){const st=Math.floor(Math.min(lv,30)/10);return 0.78+0.22*st/3+Math.min(0.06,Math.max(0,lv-30)/500);}
 let _plan=null,_planKey='';
-function artifactPlan(){const key=JSON.stringify([S.heroes,S.artifacts,S.overrides,S.settings.enemy,S.teams,S.settings.opsRun]);if(_plan&&_planKey===key)return _plan;
+function artifactPlan(){const key=JSON.stringify([S.heroes,S.artifacts,S.overrides,S.settings.enemy,S.teams,S.settings.opsRun,S.waves,S.swapLog]);if(_plan&&_planKey===key)return _plan;
   const teams=[['pvp',bestTeams('pvp',{n:1,enemy:S.settings.enemy})[0]],['ops',bestTeams('ops',{n:1})[0]],['raid',{team:raidSquad().squad.slice(0,5)}]].filter(x=>x[1]);
   const home={};const add=(m,team)=>team.forEach(id=>{if(H[id]&&S.heroes[id]&&S.heroes[id].owned&&!home[id])home[id]={m,team};});
   /* your own teams first: PvP, then the ops you run (highest priority first), then the advisor's best teams */
   const T=S.teams||{};if(T.pvp)add('pvp',myTeam('pvp'));
   const pr={high:0,medium:1,low:2};opsRun().slice().sort((a,b)=>(pr[a.priority]??3)-(pr[b.priority]??3)).forEach(o=>add('ops',myTeam(o.id)));
+  /* heroes a suggested op swap is about to move into a team count as used, so doing the swaps one at a time doesn't shuffle artifacts in between */
+  try{opsSwaps().forEach(x=>Object.values(x.changes).forEach(t=>add('ops',t)));}catch(e){}
   const used=new Set(Object.keys(home));
   teams.forEach(([m,t])=>add(m,t.team));
   /* heroes you actually use always count; anyone else only if they're built up (no artifacts on a level-220 Brit) */
@@ -609,7 +611,7 @@ function nextMoves(){const ids=owned();const out=[];if(!ids.length)return out;
    Object.entries(fin.moves).forEach(([id,m])=>{const n=m.n,cur=(S.heroes[id]||{}).artifact;const a=artByName(n);const nm=short(H[id].name);const hubr=(H[id].artifacts||[]).find(r=>a&&norm(r.name)===norm(a.name));const bk=artBacking(n,id);
     const why=bk==='first'?'Players give this artifact to '+nm+' first. ':bk==='players'?'Players use this on '+nm+'. ':bk==='hub'?'GTG Hub recommends it for '+nm+(hubr&&hubr.note?' ('+hubr.note.replace(/\.$/,'')+')':'')+'. ':bk==='guide'?'LincGames lists it for '+nm+'. ':(a&&a.syn?'Players and guides rarely mention this artifact, so this goes by what it does: '+a.syn.why+'. ':'');
     const from=holder[norm(n)];const lost=m.refill?(cur?`${nm}'s ${cur} goes to ${short(H[fin.takenBy[norm(cur)]]?.name||'someone else')}, so he needs a replacement. `:`${nm} has no artifact. `):'';
-    out.push({p:m.refill?64:66,st:'go',stl:'Artifact',t:`${n} → ${nm}`,d:lost+why+(cur&&!m.refill?`${nm} has ${cur} now. `:'')+(from&&from!==id?`Takes it from ${short(H[from].name)}. `:'Not on anyone at the moment. ')+'Artifacts swap everywhere at once, so this also applies in ops.',hero:id});});}
+    out.push({p:m.refill?64:66,st:'go',stl:'Artifact',t:`${n} → ${nm}`,d:lost+why+(cur&&!m.refill?`${nm} has ${cur} now. `:'')+(from&&from!==id?`Takes it from ${short(H[from].name)}${heroImportance(from).where.length?'':`, who isn't in any of your teams now`}. `:'Not on anyone at the moment. ')+'Artifacts swap everywhere at once, so this also applies in ops.',hero:id});});}
   // artifacts worth unlocking: each core hero's best artifact you don't own yet
   {const plan=artifactPlan();const own=new Set(ownedArts().map(norm));const seen=new Set();
    [...core].forEach(id=>{const h=H[id];
