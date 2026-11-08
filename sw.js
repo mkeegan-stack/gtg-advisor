@@ -1,5 +1,5 @@
-/* GTG Advisor service worker - cache version 4eb1b9b7477c (changes with every build) */
-const CACHE='gtg-4eb1b9b7477c';const CORE=["./", "index.html", "manifest.webmanifest", "standalone.js", "vendor/qrcode.js", "icons/icon-192.png", "icons/icon-512.png", "icons/apple-touch-icon.png", "icons/favicon.svg", "icons/favicon-32.png", "fonts/rubik.woff2", "fonts/saira-condensed-600.woff2", "fonts/saira-condensed-700.woff2", "fonts/saira-condensed-800.woff2"];
+/* GTG Advisor service worker - cache version 2f97571a7462 (changes with every build) */
+const CACHE='gtg-2f97571a7462';const CORE=["./", "index.html", "manifest.webmanifest", "standalone.js", "vendor/qrcode.js", "icons/icon-192.png", "icons/icon-512.png", "icons/apple-touch-icon.png", "icons/favicon.svg", "icons/favicon-32.png", "fonts/rubik.woff2", "fonts/saira-condensed-600.woff2", "fonts/saira-condensed-700.woff2", "fonts/saira-condensed-800.woff2"];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()));});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
 self.addEventListener('fetch',e=>{const r=e.request;if(r.method!=='GET'||new URL(r.url).origin!==location.origin)return;

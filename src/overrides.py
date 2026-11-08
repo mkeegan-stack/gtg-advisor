@@ -246,3 +246,10 @@ for k,v in T.items():
     O[k]['comps']=[(t['core']+t.get('sac',[])+t.get('flex',[]))[:5] for t in v['templates']]
 g['eventOpTip']='Event ops last 3-5 minutes: players pull Space Racer and Anissa out of their usual op for a few runs. A second, unskilled level-340 Space Racer and 3-4 level-159 fish cover most event ops.'
 json.dump(g,open(f'{D}/game-data.json','w'),indent=1)
+# strip page junk the skill scraper picked up after some last skills ("Art More heroes All heroes ...")
+for h in g['heroes']:
+    for s in h.get('skills',[]):
+        t=s.get('text','');i=t.find(' Art More heroes')
+        if i<0:i=t.find('More heroes All heroes')
+        if i>=0:s['text']=t[:i].rstrip()
+json.dump(g,open(f'{D}/game-data.json','w'),indent=1)
