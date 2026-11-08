@@ -331,7 +331,8 @@ function artFit(name,id,team,mode){const a=artByName(name);if(!a)return 0;const 
   if(n.includes('bodyenhancement')||n.includes('guardiansoftheglobebracelet')||n.includes('spydrone')){const c=team.filter(x=>(H[x].tags||[]).some(t=>/Guardians of the Globe/.test(t))).length;s*=c>=3?1.25:c>=1?0.8:0.3;}
   if(n.includes('thraxansjetpack'))s*=(h.tags||[]).includes('Flying')?0.7:0.1;
   if(a.owners){const oi=a.owners.indexOf(id);
-    if(oi>=0&&(h.keepBase||devRatio(id)>=0.6))s=Math.max(s,[1.8,1.2,1.1,1.0,0.95][Math.min(oi,4)]);
+    const ramp=h.keepBase?1:Math.max(0,Math.min(1,(devRatio(id)-0.4)/0.25));
+    if(oi>=0&&ramp>0)s=Math.max(s,s+([1.8,1.2,1.1,1.0,0.95][Math.min(oi,4)]-s)*ramp);
     else if(oi<0&&ri<0&&gi<0&&a.owners.some(o=>S.heroes[o]&&S.heroes[o].owned&&['S','A'].some(t=>['pvp','ops','raid'].some(m=>tierOf(o,m)===t))))s*=0.25;}
   const lv=+(S.artifacts[a.name]||{}).level||1;s*=artLevelFactor(lv);
   return s;}
@@ -621,7 +622,8 @@ function nextMoves(){const ids=owned();const out=[];if(!ids.length)return out;
    Object.entries(fin.moves).forEach(([id,m])=>{const n=m.n,cur=(S.heroes[id]||{}).artifact;const a=artByName(n);const nm=short(H[id].name);const hubr=(H[id].artifacts||[]).find(r=>a&&norm(r.name)===norm(a.name));const bk=artBacking(n,id);
     const why=bk==='first'?'Players give this artifact to '+nm+' first. ':bk==='players'?'Players use this on '+nm+'. ':bk==='hub'?'GTG Hub recommends it for '+nm+(hubr&&hubr.note?' ('+hubr.note.replace(/\.$/,'')+')':'')+'. ':bk==='guide'?'LincGames lists it for '+nm+'. ':(a&&a.syn?'Players and guides rarely mention this artifact, so this goes by what it does: '+a.syn.why+'. ':'');
     const from=holder[norm(n)];const lost=m.refill?(cur?`${nm}'s ${cur} goes to ${short(H[fin.takenBy[norm(cur)]]?.name||'someone else')}, so he needs a replacement. `:`${nm} has no artifact. `):'';
-    out.push({p:m.refill?64:66,st:'go',stl:'Artifact',t:`${n} → ${nm}`,d:lost+why+(cur&&!m.refill?`${nm} has ${cur} now. `:'')+(from&&from!==id?`Takes it from ${short(H[from].name)}${heroImportance(from).where.length?'':`, who isn't in any of your teams now`}. `:'Not on anyone at the moment. ')+'Artifacts swap everywhere at once, so this also applies in ops.',hero:id});});}
+    const weak=m.refill&&a&&artFit(n,id,[id],'ops')<0.15;
+    out.push({p:m.refill?64:66,st:'go',stl:'Artifact',t:`${n} → ${nm}`,d:lost+(weak?'':why)+(cur&&!m.refill?`${nm} has ${cur} now. `:'')+(from&&from!==id?(()=>{const wi=heroImportance(id).where,wf=heroImportance(from).where;return `Takes it from ${short(H[from].name)}${wf.length?` (${wf.slice(0,2).join(', ')})`:`, who isn't in any of your teams now`}${wi.length?`; ${nm} plays in ${wi.slice(0,2).join(', ')}`:''}. `;})():'Not on anyone at the moment. ')+(weak?`It's the best of what's left, but its ability won't do much for ${nm} - mostly its stats help. `:'')+'Artifacts swap everywhere at once, so this also applies in ops.',hero:id});});}
   // artifacts worth unlocking: each core hero's best artifact you don't own yet
   {const plan=artifactPlan();const own=new Set(ownedArts().map(norm));const seen=new Set();
    [...core].forEach(id=>{const h=H[id];
