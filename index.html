@@ -407,16 +407,31 @@ function skillCost(lvl){const r=G.skillCosts.find(x=>x.level===lvl);if(!r)return
 const PRIOW={S:4,A:3,B:2,F:0,'?':2.5};
 /* How much one more level adds, from the skill's own numbers ("26 to 30%" = level 1 to level 10). Skills with no text get a typical value. */
 const SKILL_GAIN_TYPICAL=0.6;
-function skillGain(id,i){const t=((H[id].skills||[])[i]||{}).text||'';const m=t.replace(/,/g,'').match(/(\d+(?:\.\d+)?)\s*to\s*(\d+(?:\.\d+)?)/);
-  if(!m)return {g:SKILL_GAIN_TYPICAL,known:false};const a=+m[1],b=+m[2];if(!(a>0&&b>0)||a===b)return {g:SKILL_GAIN_TYPICAL,known:false};return {g:Math.max(a,b)/Math.min(a,b)-1,known:true,a,b,unit:(t.match(/to\s*[\d.]+\s*(%|seconds?|s\b)/)||[])[1]||''};}
+function skillGain(id,i){const t=(((H[id].skills||[])[i]||{}).text||'').replace(/,/g,'');
+  /* every "X to Y" range in the skill improves with level (damage, chance, duration, count, cooldown), so look at all of them,
+     not just the first - Cecil's Subterfuge starts with "5 to 7 times" but the heal and crit ranges matter more */
+  const rs=[...t.matchAll(/(\d+(?:\.\d+)?)\s*to\s*(\d+(?:\.\d+)?)\s*(%|seconds?|s\b|times?|buffs?)?/g)].map(m=>({a:+m[1],b:+m[2],unit:m[3]||''})).filter(r=>r.a>0&&r.b>0&&r.a!==r.b);
+  if(!rs.length)return {g:SKILL_GAIN_TYPICAL,known:false};
+  rs.forEach(r=>r.g=Math.max(r.a,r.b)/Math.min(r.a,r.b)-1);rs.sort((x,y)=>y.g-x.g);
+  /* the biggest range counts in full, the others add a share of theirs */
+  const g=Math.min(3,rs[0].g+0.35*rs.slice(1).reduce((t,r)=>t+r.g,0));const m=rs.find(r=>/%/.test(r.unit))||rs[0];
+  /* conditional skills (only against or with one faction) do nothing in fights without it */
+  const cond=/enemy "|enemies? "|against "/.test(t)||FACTION_RE.test(t)?0.45:1;
+  const first=[...t.matchAll(/(\d+(?:\.\d+)?)\s*to\s*(\d+(?:\.\d+)?)/g)].map(m=>Math.max(+m[1],+m[2])/Math.max(1e-9,Math.min(+m[1],+m[2]))-1)[0]||0;
+  return {g:g*cond,known:true,a:m.a,b:m.b,unit:m.unit==='%'?'%':'',cond:cond<1,n:rs.length,first};}
+/* names of factions and team tags: a skill whose text names one only works with (or against) that group */
+const FACTION_RE=new RegExp('\\b('+[...new Set(Object.values(H).flatMap(h=>[h.faction,...(h.tags||[])]).filter(x=>x&&x.length>3&&!/^(Human|Melee|Ranged|Flying|Grounded)$/i.test(x)))].map(x=>x.replace(/s$/,'')).map(x=>x.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|')+')s?\\b','i');
 function costUnits(c){return c?c.me+5*c.sme+c.chips/10000:999;}
 /* value of the next level = how much the skill matters (players' rating) x how much a level adds / what it costs */
-function skillStepValue(id,i,cur){const s=H[id].skills[i];const w={S:1,A:.8,B:.55}[s.prio]??.6;const g=skillGain(id,i);const tg=s.target&&cur<s.target?1.6:1; /* a level players widely say to reach */return tg*w*(g.g/9)/Math.max(1,costUnits(skillCost(cur+1)));}
+function skillStepValue(id,i,cur){const s=H[id].skills[i];const w={S:1,A:.8,B:.55}[s.prio]??.6;const g=skillGain(id,i);const tg=s.target&&cur<s.target?1.6:1; /* a level players widely say to reach */
+  /* focus (default): a skill you've started gets finished to 10 before the plan opens cheap level-1 steps elsewhere; spread: pure value per Molecular Enhancement */
+  const fc=(S.settings.skillStyle||'focus')==='focus'&&cur>1&&cur<10?1+0.45*(cur-1):1;
+  return fc*tg*w*(g.g/9)/Math.max(1,costUnits(skillCost(cur+1)));}
 function nextSkill(id){const u=S.heroes[id];const h=H[id];if(h.keepBase)return null;const sk=u.skills||[];let low=null,high=null;
   /* every worthwhile skill to 10 first; only then the "take to 15" ones. Within that, best value for what it costs. */
   h.skills.forEach((s,i)=>{if(!skillUnlocked(u,i))return;const cur=Math.max(1,+sk[i]||1);if(cur>=15)return;const p=PRIOW[s.prio]??2;if(p===0)return;
     if(cur>=10&&!s.to15)return;const gn=skillGain(id,i);
-    if(gn.known&&gn.g<0.15&&!s.to15)return; /* the effect barely changes from level 1 to 10 (e.g. 41% → 45%): levels aren't worth the materials */
+    if(gn.known&&!s.to15&&(gn.g<0.15||gn.cond&&gn.first<0.15))return; /* headline effect barely changes, or it only works with/against one faction */ /* the effect barely changes from level 1 to 10 (e.g. 41% → 45%): levels aren't worth the materials */
     const c={i,name:s.name,cur,target:cur+1,prio:s.prio,value:skillStepValue(id,i,cur),gain:gn};c.score=c.value;
     if(cur<10){if(!low||c.score>low.score)low=c;}else if(!high||c.score>high.score)high=c;});
   const best=low||high;if(!best)return null;best.req=skillReqLevel(best.i,best.target);best.cost=skillCost(best.target);return best;}
@@ -638,7 +653,7 @@ function nextMoves(){const ids=owned();const out=[];if(!ids.length)return out;
     const imp0=heroImportance(id,pvp&&pvp.team,raid.team);
     if((+u.level||0)<cap-1&&imp0.v>=0.3)out.push({p:52+25*imp0.v,st:'go',stl:'Level up',t:`Level ${short(h.name)} to ${cap}`,d:`At ${u.level||'?'} of ${cap} for ${u.rank}${u.rank==='Omnipotent+'&&u.stars?' ★'+u.stars:''}. Levels use Hero XP, not the Molecular Enhancements skills need, so this doesn't compete with skill upgrades.`,hero:id});
     const imp=heroImportance(id,pvp&&pvp.team,raid.team);const ns=imp.v>=0.3?nextSkill(id):null;if(ns){const lvlOk=(+u.level||0)>=ns.req;const ready=lvlOk;
-      const REFV=1*(0.6/9)/50;const vr=Math.min(1.5,ns.value/REFV);const sp=ns.cur<10?50+22*imp.v*Math.sqrt(vr):38+14*imp.v*Math.sqrt(vr);
+      const REFV=1*(0.6/9)/50;const vr=Math.min(6,ns.value/REFV);const sp=ns.cur<10?50+12*imp.v*Math.sqrt(vr):38+8*imp.v*Math.sqrt(vr)+((S.settings.skillStyle||'focus')==='focus'&&ns.cur>1&&ns.cur<10?8:0);
       out.push({p:ready?sp:sp-30,st:ready?'go':'wait',stl:ready?'Skill next':'Skill blocked',t:`${short(h.name)}: ${ns.name} → ${ns.target}`,d:(H[id].skills[ns.i].target&&ns.cur<H[id].skills[ns.i].target?H[id].skills[ns.i].targetWhy+' ':'')+(ns.prio&&ns.prio!=='?'?`Players rate this skill ${ns.prio}${H[id].skills[ns.i].to15?' and take it to 15':''}. `:'')+(()=>{const tx=(H[id].skills[ns.i].text||'').split(/(?<=\.)\s/)[0];const u=ns.gain.unit==='%'?'%':ns.gain.unit?' '+ns.gain.unit:'';return (tx?`What it does: ${tx.length>170?tx.slice(0,167)+'...':tx} `:'')+(ns.gain.known?`It scales from ${ns.gain.a}${u} at level 1 to ${ns.gain.b}${u} at level 10, so each level adds about ${+((Math.abs(ns.gain.b-ns.gain.a))/9).toFixed(1)}${u}. `:'');})()+(imp.where.length?`Used in your ${imp.where.slice(0,3).join(', ')} team${imp.where.length>1?'s':''}. `:'')+(ns.cost?`Costs ${ns.cost.me} Molecular Enhancement${ns.cost.sme?' and '+ns.cost.sme+' Special':''}. `:'')+(!lvlOk?`Needs hero level ${ns.req}. `:''),hero:id});}
     const nr=null;if(nr)out.push({p:76,st:'go',stl:'Rank up',t:`Rank up ${short(h.name)} → ${nr.to}`,d:`You have ${u.copies} spare cop${u.copies==1?'y':'ies'}. Feed: ${nr.feed}.`,hero:id});
     if(h.totem&&!(+(S.totems[h.totem.name]||{}).level>0))out.push({p:30,st:'info',stl:'Totem',t:`Work towards ${h.totem.name}`,d:`${short(h.name)}'s totem (${h.totem.stat}). Totem fragments come from Alliance Warfare.`,hero:id});
@@ -709,7 +724,7 @@ VIEWS.home=function(){const ids=owned();
   if(!mv.length)h+='<div class="card"><p>Nothing urgent. Fill in skill levels for sharper advice.</p></div>';
   const groups={};mv.forEach((m,i)=>{const sec=SEC.find(x=>x[1].test(m.stl));(groups[sec[0]]=groups[sec[0]]||{sec,items:[],top:i}).items.push(m);});
   Object.values(groups).sort((a,b)=>a.top-b.top).forEach(g=>{const [key,,label,go]=g.sec;const show=g.items.slice(0,3),rest=g.items.slice(3);
-    h+=`<div class="hsec"><span>${label}</span><small>${g.items.length} suggestion${g.items.length>1?'s':''}${go?` · <a href="#" onclick="setTab('${go}');return false" style="color:var(--accent,#3aa8ff)">open ${go==='teams'?'Teams':'Roster'} ›</a>`:''}</small></div>`+(NOTE[key]?`<p class="tiny muted" style="margin:-2px 0 6px">${NOTE[key]}</p>`:'')+show.map(card).join('');
+    h+=`<div class="hsec"><span>${label}</span><small>${g.items.length} suggestion${g.items.length>1?'s':''}${go?` · <a href="#" onclick="setTab('${go}');return false" style="color:var(--accent,#3aa8ff)">open ${go==='teams'?'Teams':'Roster'} ›</a>`:''}</small></div>`+(NOTE[key]?`<p class="tiny muted" style="margin:-2px 0 6px">${NOTE[key]}</p>`:'')+(key==='skill'?`<div class="row tiny" style="gap:6px;margin:-2px 0 8px;flex-wrap:wrap"><span class="muted">Plan:</span>${[['focus','Finish skills you\'ve started'],['spread','Most value per Molecular Enhancement']].map(([k,l])=>`<button class="chipbtn${(S.settings.skillStyle||'focus')===k?' on':''}" onclick="S.settings.skillStyle='${k}';save();render()">${l}</button>`).join('')}</div>`:'')+show.map(card).join('');
     if(rest.length)h+=`<details class="card" style="padding-top:8px;padding-bottom:8px"><summary class="tiny"><b>${rest.length} more ${label.toLowerCase()}</b></summary><div>${rest.map(m=>`<p style="margin:8px 0"${m.hero?` data-hero="${esc(m.hero)}"`:''}><b>${esc(m.t)}</b> — ${esc(strip(m.d))}</p>`).join('')}</div></details>`;});
   const best=bestTeams('pvp',{n:1,enemy:S.settings.enemy})[0];
   if(best){h+=`<div class="sec">Best PvP team you own <small>${best.score.toFixed(0)} pts</small></div><div class="grid5">${best.team.map(id=>tileHTML(id,{mini:true,mode:'pvp'})).join('')}</div>`;
