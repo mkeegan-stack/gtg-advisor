@@ -108,8 +108,8 @@ table.t th,table.t td{text-align:left;padding:6px 6px;border-bottom:1px solid rg
 table.t th{color:var(--ink-3);font-weight:600}
 .tbox{overflow-x:auto;background:var(--panel-3);padding:4px 6px;margin-bottom:10px}
 .sheet-bg{position:fixed;inset:0;background:rgba(5,10,30,.6);z-index:50;display:none}
-.sheet{position:fixed;left:0;right:0;bottom:0;max-height:92vh;overflow-y:auto;z-index:51;background:var(--ground-1);border-top:3px solid var(--gold);padding:14px 14px calc(18px + env(safe-area-inset-bottom));display:none;max-width:760px;margin:0 auto}
-.sheet.open,.sheet-bg.open{display:block}
+.sheet{position:fixed;left:0;right:0;bottom:0;max-height:92vh;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;z-index:51;background:var(--ground-1);border-top:3px solid var(--gold);padding:14px 14px calc(18px + env(safe-area-inset-bottom));display:none;max-width:760px;margin:0 auto}
+.sheet.open,.sheet-bg.open{display:block}.sheet *{max-width:100%}.sheet img,.sheet svg{height:auto}
 .sheet .x{position:sticky;top:0;float:right;background:var(--panel-2);border:1px solid var(--line-soft);width:36px;height:36px;font-size:18px;z-index:2}
 .field{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
 .field label{font-size:11px;color:var(--ink-3);font-weight:600;text-transform:uppercase;letter-spacing:.6px}
@@ -557,6 +557,9 @@ function finalArtifacts(pvp,raid){const raw=artifactPlan();const fin={};owned().
          if(y&&(fixed.has(y)||firstPick(y)||H[y].keepBase))return;
          /* never take an artifact from a hero players/guides back it for, to give it to someone with weaker backing */
          if(y&&BKR(artBacking(n,x))<BKR(artBacking(n,y)))return;
+         /* only trades players or guides back for the receiver - or to give a hero with nothing useful something better.
+            Effect-based guesses don't move an artifact off a hero who already has a decent one. */
+         if(BKR(artBacking(n,x))<1&&ox&&!(moves[x]&&moves[x].refill))return;
          const before=W(x)*F(ox,x)+(y?W(y)*F(n,y):0),after=W(x)*F(n,x)+(y?W(y)*F(ox,y):0),gain=after-before;
          if(gain>0.05&&after>before*1.2&&(!best||gain>best.gain))best={x,y,n,ox,gain};});});
      if(!best)break;const {x,y,n,ox}=best;fin[x]=n;if(y){if(ox)fin[y]=ox;else delete fin[y];}}
@@ -608,7 +611,7 @@ function nextMoves(){const ids=owned();const out=[];if(!ids.length)return out;
     const why=bk==='first'?'Players give this artifact to '+nm+' first. ':bk==='players'?'Players use this on '+nm+'. ':bk==='hub'?'GTG Hub recommends it for '+nm+(hubr&&hubr.note?' ('+hubr.note.replace(/\.$/,'')+')':'')+'. ':bk==='guide'?'LincGames lists it for '+nm+'. ':(a&&a.syn?'Players and guides rarely mention this artifact, so this goes by what it does: '+a.syn.why+'. ':'');
     const from=holder[norm(n)];const lost=m.refill?(cur?`${nm}'s ${cur} goes to ${short(H[fin.takenBy[norm(cur)]]?.name||'someone else')}, so he needs a replacement. `:`${nm} has no artifact. `):'';
     const weak=m.refill&&a&&artFit(n,id,[id],'ops')<0.15;
-    const optT=m.opt&&cur&&fin.takenBy[norm(cur)]&&fin.takenBy[norm(cur)]!==id?`Part of a trade that suits your roster better: ${nm}'s ${cur} goes to ${short(H[fin.takenBy[norm(cur)]].name)}${artFit(n,id,[id],'pvp')<artFit(cur,id,[id],'pvp')?`. It's a small step down for ${nm}, but ${cur} does a lot more there`:''}. `:'';
+    const optT=m.opt&&cur&&fin.takenBy[norm(cur)]&&fin.takenBy[norm(cur)]!==id?`Part of a trade that suits your roster better: ${nm}'s ${cur} goes to ${short(H[fin.takenBy[norm(cur)]].name)}${inMyTeams(fin.takenBy[norm(cur)])?'':' (not in a team, so it just goes spare)'}${artFit(n,id,[id],'pvp')<artFit(cur,id,[id],'pvp')?`. It's a small step down for ${nm}, but ${cur} does a lot more there`:''}. `:'';
     out.push({p:m.refill?64:66,st:'go',stl:'Artifact',t:`${n} → ${nm}`,d:lost+(weak?'':why)+optT+(cur&&!m.refill&&!optT?`${nm} has ${cur} now. `:'')+(from&&from!==id?(()=>{const wi=heroImportance(id).where,wf=heroImportance(from).where;return `Takes it from ${short(H[from].name)}${wf.length?` (${wf.slice(0,2).join(', ')})`:`, who isn't in any of your teams now`}${wi.length?`; ${nm} plays in ${wi.slice(0,2).join(', ')}`:''}. `;})():'Not on anyone at the moment. ')+(weak?`It's the best of what's left, but its ability won't do much for ${nm} - mostly its stats help. `:'')+'Artifacts swap everywhere at once, so this also applies in ops.',hero:id});});}
   // artifacts worth unlocking: each core hero's best artifact you don't own yet
   {const plan=artifactPlan();const own=new Set(ownedArts().map(norm));const seen=new Set();
