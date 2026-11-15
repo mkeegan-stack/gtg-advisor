@@ -7105,7 +7105,6 @@
       "rus-livingston",
       "tech-jacket",
       "invincible-blue",
-      "kid-omni-man",
       "doc-seismic",
       "volcanikka"
      ]
@@ -7563,7 +7562,7 @@
    ],
    "rule": "Kregg's 3rd skill charges Thragg every time an ally dies, so the team feeds him sacrifices: level-1 Multi-Pauls are best (his 3rd skill gives two deaths each), any level-1 Viltrumite also works; Ragnars do much worse. Thragg at the back so the sacrifices get hit first. Strong accounts swap sacrifices for Conquest and Nolan (~2,200 waves).",
    "solo": false,
-   "mech": "The op sends Yellow Mark and The Immortal, who have immunity barriers - Conquest handles them. Volcanikka summons work as sacrifices but cost about 400-600 waves."
+   "mech": "The op sends Yellow Mark and The Immortal, who have immunity barriers - Conquest handles them. Volcanikka summons work as sacrifices but cost about 400-600 waves. No top-player TiH team runs a healer: healing keeps the sacrifices alive, which slows Kregg's charges."
   },
   {
    "id": "train-and-gain",

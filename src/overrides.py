@@ -211,7 +211,7 @@ T={
 'downtown-destruction':dict(rule='Pink XP. Space Racer, Anissa and Blue Mark carry it (Anissa is the main damage: every enemy is human, so push her level and her 2nd skill); the other two slots are flexible - a second Blue Mark, Rus (2nd skill 10) or Tech Jacket.',
   mech='All enemies are humans, which Anissa\'s 2nd skill punishes. Give her an attack artifact (Spray Gun or Cloak); Notes can go on a teammate. An unskilled 2nd Space Racer works here if your main one is in Train and Gain.',templates=[
   dict(name='Space Racer + Anissa + Blue Mark',core=['space-racer','anissa','invincible-blue'],flex=['invincible-blue','rus-livingston','tech-jacket','flaxan-leader','aquarus','universa']),
-  dict(name='Universa + Anissa + Blue Mark',core=['universa','anissa','invincible-blue'],flex=['rus-livingston','tech-jacket','invincible-blue','kid-omni-man','doc-seismic','volcanikka'])]),
+  dict(name='Universa + Anissa + Blue Mark',core=['universa','anissa','invincible-blue'],flex=['rus-livingston','tech-jacket','invincible-blue','doc-seismic','volcanikka'])]),
 'guardians-of-the-globe':dict(rule='Armour (gear) op, low priority. Criminals get +20% here. Lizard League + Doc + Shapesmith is the comp top players run (~1,550 waves); fill with leftovers otherwise.',
   mech='Criminal faction boost (+20%). Shapesmith is the one non-Criminal players rate highly here.',templates=[
   dict(name='Doc + Shapesmith + Lizards',core=['komodo-dragon','shapesmith','doc-seismic'],flex=['king-lizard','iguana','angstrom-levy','titan']),
@@ -223,7 +223,7 @@ T={
   dict(name='Universa + sacrifices',core=['universa'],sac=['omni-man','omni-man','omni-man','omni-man'],sacAny=['multi-paul']),
   dict(name='Maulerplex',core=['powerplex','mauler-twin-range','mauler-twin-melee'],flex=['mauler-twin-range','mauler-twin-melee','angstrom-levy'])]),
 'this-is-heavy':dict(rule='Kregg\'s 3rd skill charges Thragg every time an ally dies, so the team feeds him sacrifices: level-1 Multi-Pauls are best (his 3rd skill gives two deaths each), any level-1 Viltrumite also works; Ragnars do much worse. Thragg at the back so the sacrifices get hit first. Strong accounts swap sacrifices for Conquest and Nolan (~2,200 waves).',
-  mech='The op sends Yellow Mark and The Immortal, who have immunity barriers - Conquest handles them. Volcanikka summons work as sacrifices but cost about 400-600 waves.',templates=[
+  mech='The op sends Yellow Mark and The Immortal, who have immunity barriers - Conquest handles them. Volcanikka summons work as sacrifices but cost about 400-600 waves. No top-player TiH team runs a healer: healing keeps the sacrifices alive, which slows Kregg\'s charges.',templates=[
   dict(name='Thragg + Kregg + sacrifices',core=['thragg','general-kregg'],sac=['multi-paul','multi-paul','multi-paul'],sacAny=['thula','kid-omni-man'],flex=['conquest','nolan','cecil-stedman','invincible-blue','anissa','agent-spider']),
   dict(name='Thragg + Kregg + Conquest + Nolan',core=['thragg','general-kregg','conquest'],flex=['nolan','cecil-stedman','invincible-blue'],sac=['multi-paul'],sacAny=['thula','kid-omni-man']),
   dict(name='Thragg + Kregg + Volcanikka summons',core=['thragg','general-kregg','volcanikka'],flex=['multi-paul','tech-jacket','doc-seismic','conquest'],thin=True)]),
