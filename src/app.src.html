@@ -435,7 +435,10 @@ function templateFit(team,o,t){const rem=[...team];let s=0,core=0,flex=0;const t
   (t.flex||[]).forEach(id=>{if(takeOne(id)){s+=heroStrength(id);flex++;}});
   /* teams built on sacrifices need allies to die: a healer outside the players' comp works against that (keeps the sacrifices alive) */
   const sacTeam=(t.sac||[]).some(x=>x!=='aquarus');
-  rem.forEach(id=>{s+=o.solo?-0.6:sacTeam&&isHealer(id)?-0.25*heroStrength(id):0.35*heroStrength(id);});
+  /* in sacrifice teams, an extra sacrifice (a hero players use in those slots) is worth as much as a listed one,
+     and a random strong filler is worth less than that - players fill these slots with sacrifices, not spare power */
+  const sacSet=new Set([...(t.sac||[]),...(t.sacAny||[])]);
+  rem.forEach(id=>{s+=o.solo?-0.6:sacTeam&&isHealer(id)?-0.25*heroStrength(id):sacTeam&&sacSet.has(id)?0.9:sacTeam?Math.min(0.5,0.35*heroStrength(id)):0.35*heroStrength(id);});
   /* sacrifice/fish slots are part of how the team works (deaths charge Kregg, fish buff crit), so they count towards coverage */
   const need=t.core.length+(t.sac||[]).length;const cov=need?(core+sacN)/need:1;s*=0.4+0.6*cov;return {score:Math.max(0,s),core,flex,cov,t};}
 function opsTeamBreakdown(team,o){const ts=o.templates||[{name:'players\' team',core:[],flex:opComp(o)}];let best=null;

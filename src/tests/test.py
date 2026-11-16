@@ -63,6 +63,10 @@ async def main():
           owned().forEach(id=>{const ns=nextSkill(id);if(!ns)return;const u=S.heroes[id];H[id].skills.forEach((s,i)=>{const cur=Math.max(1,+(u.skills||[])[i]||1);
             if(skillUnlocked(u,i)&&cur<10&&ns.cur<10&&(PR[s.prio]??2)<(PR[ns.prio]??2))bad.push('skill: '+id+' '+ns.name+' over '+s.name);});
             const c1=JSON.stringify(nextSkill(id));if(JSON.stringify(nextSkill(id))!==c1)bad.push('skill unstable: '+id);});
+          /* op swaps: never put a healer into a sacrifice team, never swap a sacrifice out for a hero the players' teams don't use there */
+          opsSwaps().forEach(m=>Object.entries(m.changes).forEach(([k,t])=>{const o=G.ops.find(x=>x.id===k);const T=o.templates||[];const sacT=T.some(q=>(q.sac||[]).some(x=>x!=='aquarus'));if(!sacT)return;
+            const before=myTeam(k);const ins=t.filter(x=>!before.includes(x)),outs=before.filter(x=>!t.includes(x));const inTpl=x=>T.some(q=>[...q.core,...(q.flex||[]),...(q.sac||[]),...(q.sacAny||[])].includes(x));const isSac=x=>T.some(q=>[...(q.sac||[]),...(q.sacAny||[])].includes(x));
+            ins.forEach(x=>{if(isHealer(x)&&!inTpl(x))bad.push('swap puts healer '+x+' into '+k);if(!inTpl(x)&&outs.some(isSac))bad.push('swap replaces a sacrifice with '+x+' in '+k);});}));
           _plan=null;const f=finalArtifacts(bestTeams('pvp',{n:1})[0],{team:raidSquad().squad.slice(0,5)});
           Object.entries(f.moves).forEach(([id,m])=>{const cur=S.heroes[id].artifact;const lost=cur&&Object.values(f.moves).some(o=>norm(o.n)===norm(cur));
             if(!artBacking(m.n,id)&&cur&&!lost)bad.push('artifact: '+m.n+' -> '+id+' has no player/guide backing');
