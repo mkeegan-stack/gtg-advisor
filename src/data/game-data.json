@@ -6654,6 +6654,15 @@
    "effectSrc": "in-game screenshot",
    "tierNote": "Crit damage that grows with other Coalition of Planets heroes alive - for teams with Space Racer, Tech Jacket, Anissa or Blue Mark.",
    "tierSrc": "r/invinciblegtg"
+  },
+  {
+   "name": "Relonian Bomb",
+   "tier": "?",
+   "stats": [],
+   "source": "Added in update 3.8",
+   "effect": "New in update 3.8 - its effect isn't published yet.",
+   "owners": [],
+   "guide": []
   }
  ],
  "totems": [
@@ -7110,7 +7119,7 @@
      ]
     }
    ],
-   "rule": "Pink XP. Space Racer, Anissa and Blue Mark carry it (Anissa is the main damage: every enemy is human, so push her level and her 2nd skill); the other two slots are flexible - a second Blue Mark, Rus (2nd skill 10) or Tech Jacket.",
+   "rule": "Pink XP. Space Racer, Anissa and Blue Mark carry it (Anissa is the main damage: every enemy is human, so push her level and her 2nd skill); the other two slots are flexible - a second Blue Mark, Rus (2nd skill 10) or Tech Jacket. Update 3.8 (18 Nov) greatly raised rewards for very high waves and the rank-up bonus from op rank 21, so pushing this op further now pays more.",
    "solo": false,
    "mech": "All enemies are humans, which Anissa's 2nd skill punishes. Give her an attack artifact (Spray Gun or Cloak); Notes can go on a teammate. An unskilled 2nd Space Racer works here if your main one is in Train and Gain."
   },
@@ -7712,7 +7721,7 @@
      ]
     }
    ],
-   "rule": "Space Racer (front left) + 4 fish caps at about 1,600 waves; Tech Jacket in place of a fish adds a little. Only a fully built Maulerplex (Powerplex + 4 ranged Maulers, all Omni+, Mauler Cell \"Not the Clone\") goes past 2,000. Once you hit the wave you want, swap fish for Flaxan Leaders: each adds loot without losing waves.",
+   "rule": "Space Racer (front left) + 4 fish caps at about 1,600 waves; Tech Jacket in place of a fish adds a little. Only a fully built Maulerplex (Powerplex + 4 ranged Maulers, all Omni+, Mauler Cell \"Not the Clone\") goes past 2,000. Once you hit the wave you want, swap fish for Flaxan Leaders: each adds loot without losing waves. Update 3.8 (18 Nov) greatly raised rewards for very high waves and the rank-up bonus from op rank 21, so pushing this op further now pays more.",
    "solo": false,
    "mech": "Keep fish at Elite+ (level 160-200): higher ranks unlock a 3rd-skill animation that costs waves. Body Enhancement does little on Space Racer once the fish push his crit to 100%."
   },
@@ -8076,6 +8085,37 @@
   "5": "+12% HP, +6% ATK, +6% DEF"
  },
  "patches": [
+  {
+   "v": "3.8",
+   "date": "2026-11-18",
+   "items": [
+    {
+     "target": null,
+     "kind": "info",
+     "text": "Heroes now max out at level 7,000; Rank-Up stars are uncapped."
+    },
+    {
+     "target": null,
+     "kind": "info",
+     "text": "Train and Gain and Downtown Destruction: much bigger rewards for very high waves, and a bigger rank-up bonus from op rank 21."
+    },
+    {
+     "target": null,
+     "kind": "info",
+     "text": "Campaign idle rewards: 10x Hero XP, and they now include Hero Special XP."
+    },
+    {
+     "target": "wolf-man",
+     "kind": "fix",
+     "text": "His charges weren't being used up in GDA ops."
+    },
+    {
+     "target": null,
+     "kind": "info",
+     "text": "New artifact: Relonian Bomb. New GDA Case Files: Space Racer and Iguana. Reward code: RAC3R8."
+    }
+   ]
+  },
   {
    "v": "3.7",
    "date": "2026-10-20",
@@ -8790,5 +8830,8 @@
   "Neural-Link Chip": "Neural-link Chip"
  },
  "artifactNote": "Artifacts swap everywhere at once: there is no snapshotting, so moving one for PvP also moves it in a running op.",
- "eventOpTip": "Event ops last 3-5 minutes: players pull Space Racer and Anissa out of their usual op for a few runs. A second, unskilled level-340 Space Racer and 3-4 level-159 fish cover most event ops."
+ "eventOpTip": "Event ops last 3-5 minutes: players pull Space Racer and Anissa out of their usual op for a few runs. A second, unskilled level-340 Space Racer and 3-4 level-159 fish cover most event ops.",
+ "gameVersion": "3.8",
+ "built": "2026-11-18",
+ "maxLevel": 7000
 }

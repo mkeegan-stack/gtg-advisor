@@ -263,3 +263,18 @@ for h in g['heroes']:
         t=_re.sub(r'\(\s+','(',t)
         s['text']=t
 json.dump(g,open(f'{D}/game-data.json','w'),indent=1)
+
+# ---- Game update 3.8 (18 Nov 2026), Ubisoft patch notes ----
+g['gameVersion']='3.8';g['built']='2026-11-18';g['maxLevel']=7000
+if not any(a['name']=='Relonian Bomb' for a in g['artifacts']):
+    g['artifacts'].append(dict(name='Relonian Bomb',tier='?',stats=[],source='Added in update 3.8',effect='New in update 3.8 - its effect isn\'t published yet.',owners=[],guide=[]))
+for o in g['ops']:
+    if o['id'] in ('train-and-gain','downtown-destruction'):
+        o['rule']=o.get('rule','')+' Update 3.8 (18 Nov) greatly raised rewards for very high waves and the rank-up bonus from op rank 21, so pushing this op further now pays more.'
+g.setdefault('patches',[]).insert(0,dict(v='3.8',date='2026-11-18',items=[
+  dict(target=None,kind='info',text='Heroes now max out at level 7,000; Rank-Up stars are uncapped.'),
+  dict(target=None,kind='info',text='Train and Gain and Downtown Destruction: much bigger rewards for very high waves, and a bigger rank-up bonus from op rank 21.'),
+  dict(target=None,kind='info',text='Campaign idle rewards: 10x Hero XP, and they now include Hero Special XP.'),
+  dict(target='wolf-man',kind='fix',text="His charges weren't being used up in GDA ops."),
+  dict(target=None,kind='info',text='New artifact: Relonian Bomb. New GDA Case Files: Space Racer and Iguana. Reward code: RAC3R8.')]))
+json.dump(g,open(f'{D}/game-data.json','w'),indent=1)
